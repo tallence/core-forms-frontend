@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<themeDefinition modelVersion="1">
+
+  <name>formeditor</name>
+  <!-- <description>a short description</description> -->
+  <!-- <thumbnail>img/theme-preview.jpg</thumbnail> -->
+
+  <javaScriptLibraries>
+    <!-- add thirdparty js files that are not bundled via webpack here -->
+    <!-- <javaScript>vendor/some-vendor-script.js</javaScript> -->
+  </javaScriptLibraries>
+
+  <javaScripts>
+    <!-- add own js files that are not bundled via webpack here -->
+    <!-- <javaScript>js/your-code.js</javaScript> -->
+    <javaScript disableCompress="true">js/formeditor.js</javaScript>
+  </javaScripts>
+
+  <styleSheets>
+    <css disableCompress="true">https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css</css>
+    <css disableCompress="true">css/formeditor.css</css>
+  </styleSheets>
+
+  <templateSets>
+    <templateSet>templates/formeditor-templates.jar</templateSet>
+    <templateSet>templates/bricks-templates.jar</templateSet>
+  </templateSets>
+
+  <resourceBundles>
+    <!-- add brick resource bundles here -->
+    <resourceBundle>l10n/formeditor_en.properties</resourceBundle>
+    <resourceBundle>l10n/FormEditor_en.properties</resourceBundle>
+  </resourceBundles>
+
+</themeDefinition>

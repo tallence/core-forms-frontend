@@ -1,0 +1,56 @@
+.fieldtip {
+
+	// local variables
+	$fieldtip-size: 20px;
+	height: $fieldtip-size;
+	width: $fieldtip-size;
+	padding-left: $fieldtip-size/2;
+	display: inline-block;
+	box-sizing: content-box;
+	text-align: right;
+
+	&-container {
+		text-align: right;
+		position: relative;
+		height: $fieldtip-size;
+		margin: 4px 0;
+
+		&--left {
+			text-align: left;
+		}
+	}
+
+	&__icon {
+		width: $fieldtip-size;
+		height: $fieldtip-size;
+		fill: $color-primary;
+		position: absolute;
+		right: 0;
+
+		.fieldtip-container--left & {
+			right: auto;
+			left: 0;
+		}
+	}
+
+	&:hover {
+		position: relative;
+		&:before {
+			@include vertical-center;
+			content: attr(data-fieldtip);
+			padding: 0 8px;
+			background-color: $color-primary;
+			color: $color-white;
+			right: $fieldtip-size + 10px;
+			white-space: nowrap;
+			z-index: 20;
+			border-radius: 5px;
+
+			.fieldtip-container--left & {
+				right: auto;
+				left: $fieldtip-size + 10px;
+			}
+		}
+	}
+
+}
