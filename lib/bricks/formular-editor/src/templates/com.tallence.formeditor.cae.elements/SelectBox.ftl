@@ -3,10 +3,9 @@
 
 <#assign validator = self.validator />
 <#assign isMandatory = self.mandatory />
-<#assign tooltip = self.hint?has_content?then(' tooltip','') />
 
 <div class="form__group">
-    <div class="select clearfix${tooltip}">
+    <div class="select clearfix">
         <div class="row">
 
             <div class="col-10">
@@ -24,7 +23,11 @@
                         id="${self.id}" ${isMandatory?then("required",'')}>
                     <option value=""><@bp.message "cae-form-select-default"/></option>
                 <#list options as option>
-                    <#if option.selectedByDefault>selected="selected"</#if>${option.value}</option>
+                    <option
+                        value="${option.value}"
+                        <#if option.selectedByDefault>selected="selected"</#if>>
+                        ${option.value}
+                    </option>
                 </#list>
                 </select>
             </div>
