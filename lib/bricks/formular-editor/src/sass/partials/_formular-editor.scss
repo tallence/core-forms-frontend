@@ -2,16 +2,6 @@
 
 	&__group {
 		margin-bottom: $space-double;
-
-		.error {
-			display: none;
-		}
-
-		.is-invalid {
-			.error {
-				display: block;
-			}
-		}
 	}
 
 }
