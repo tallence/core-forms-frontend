@@ -15,13 +15,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" :class="{'is-invalid': errors.has('${self.id}') }">
                 <input class="form-control"
+                       :class="{'is-invalid': errors.has('${self.id}') }"
                        type="email"
                        maxlength="128"
                        id="${self.id}"
                        name="${self.id}"
-                ${isMandatory?then("required",'')}/>
+                       <#if isMandatory>v-validate="'required'"</#if>>
+                <small class="error text-danger">
+                    Please enter your E-Mail.
+                </small>
             </div>
         </div>
     </div>

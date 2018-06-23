@@ -15,15 +15,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" :class="{'is-invalid': errors.has('${self.id}') }">
                 <input type="number"
                        class="form-control"
+                       :class="{'is-invalid': errors.has('${self.id}') }"
                 ${validator.maxSize?has_content?then("max=" + validator.maxSize, "")}
                 ${validator.minSize?has_content?then("min=" + validator.minSize, "")}
                        id="${self.id}"
                        value="${self.value!""}"
                        name="${self.id}"
-                ${isMandatory?then('required','')}>
+                       <#if isMandatory>v-validate="'required'"</#if>>
+                <small class="error text-danger">
+                    Please fill out this field.
+                </small>
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@
        name="${self.id}"
        value="${option.value}"
        id="${optionId}"
+       v-validate="'required'" v-model="model.${self.id}"
        <#if option.selectedByDefault>checked="checked"</#if>
 />
 <label class="form-check-label" for="${optionId}">${optionValue}</label>

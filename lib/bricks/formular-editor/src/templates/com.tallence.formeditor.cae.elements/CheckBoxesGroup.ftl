@@ -4,7 +4,7 @@
 <#assign validator = self.validator />
 <#assign isMandatory = self.mandatory />
 
-<div class="form__group">
+<div class="form__group" :class="{'is-invalid': errors.has('${self.id}') }">
     <div class="form-checkboxgroup clearfix${isMandatory?then(' mandatory','')}">
         <div class="row">
             <div class="col-10">

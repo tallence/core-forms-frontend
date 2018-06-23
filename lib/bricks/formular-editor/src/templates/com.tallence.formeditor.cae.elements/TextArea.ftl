@@ -17,15 +17,19 @@
         </div>
 
         <div class="row">
-            <div class="col">
+            <div class="col" :class="{'is-invalid': errors.has('${self.id}') }">
             <#assign rows = self.rows!""/>
             <#assign amountRows = rows?has_content?then(rows, 4)/>
                 <textarea class="form-control"
+                          :class="{'is-invalid': errors.has('${self.id}') }"
                           maxlength="500"
                           id="${self.id}"
                           name="${self.id}"
                           rows="${amountRows}"
-                ${isMandatory?then('required','')}></textarea>
+                          <#if isMandatory>v-validate="'required'"</#if>></textarea>
+                <small class="error text-danger">
+                    Please fill out this field.
+                </small>
             </div>
         </div>
     </div>

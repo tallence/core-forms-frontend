@@ -16,16 +16,20 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" :class="{'is-invalid': errors.has('${self.id}') }">
                 <input type="text"
                        class="form-control"
+                       :class="{'is-invalid': errors.has('${self.id}') }"
                 ${validator.maxSize?has_content?then("max=" + validator.maxSize, "")}
                 ${validator.minSize?has_content?then("min=" + validator.minSize, "")}
                 ${hasRegexpValidator?then('pattern=' + validator.regexp.pattern(), '')}
                        id="${self.id}"
                        name="${self.id}"
                        value="${self.value!""}"
-                ${isMandatory?then('required','')}>
+                       <#if isMandatory>v-validate="'required'"</#if>>
+                <small class="error text-danger">
+                    Please fill out this field.
+                </small>
             </div>
         </div>
     </div>

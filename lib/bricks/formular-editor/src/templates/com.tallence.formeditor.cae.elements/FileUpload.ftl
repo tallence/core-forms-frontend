@@ -14,13 +14,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" :class="{'is-invalid': errors.has('${self.id}') }">
                 <input class="form-control-file"
+                       :class="{'is-invalid': errors.has('${self.id}') }"
                        type="file"
                        name="${self.id}"
                        id="${self.id}"
-                       ${isMandatory?then("required",'')}
+                       <#if isMandatory>v-validate="'required'"</#if>
                        data-max-file-size="${validator.maxSize}">
+                <small class="error text-danger">
+                    Please upload a file.
+                </small>
             </div>
         </div>
     </div>
