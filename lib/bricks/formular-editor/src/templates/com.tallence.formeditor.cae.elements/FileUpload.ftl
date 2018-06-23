@@ -27,7 +27,7 @@
                        name="element_${self.id}"
                        id="${self.id}"
                        <#if veeValExpr?has_content>v-validate="{ ${veeValExpr} }"</#if>>
-                <small class="error text-danger">
+                <small class="error text-danger" v-if="errors.has('element_${self.id}')">
                     Bitte eine Datei hochladen, die maximal ${validator.maxSize}Kb groß ist.
                 </small>
             </div>

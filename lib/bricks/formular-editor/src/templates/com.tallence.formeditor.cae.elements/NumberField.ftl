@@ -35,7 +35,7 @@
                        value="${self.value!""}"
                        name="element_${self.id}"
                        <#if veeValExpr?has_content>v-validate="{ ${veeValExpr} }"</#if>>
-                <small class="error text-danger">
+                <small class="error text-danger" v-if="errors.has('element_${self.id}')">
                     Bitte das Feld ausfüllen.
                 </small>
             </div>

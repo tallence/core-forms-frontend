@@ -32,7 +32,7 @@
                     </option>
                 </#list>
                 </select>
-                <small class="error text-danger">
+                <small class="error text-danger" v-if="errors.has('element_${self.id}')">
                     Bitte eine Option wählen.
                 </small>
             </div>

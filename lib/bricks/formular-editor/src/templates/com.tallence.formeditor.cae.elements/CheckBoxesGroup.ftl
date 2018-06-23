@@ -45,7 +45,7 @@
                 </div>
             </#if>
         </div>
-        <small class="error text-danger">
+        <small class="error text-danger" v-if="errors.has('element_${self.id}')">
             Bitte mindestens eine CheckBox wählen.
         </small>
 

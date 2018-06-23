@@ -27,7 +27,7 @@
                           name="element_${self.id}"
                           rows="${amountRows}"
                           <#if isMandatory>v-validate="'required'"</#if>></textarea>
-                <small class="error text-danger">
+                <small class="error text-danger" v-if="errors.has('element_${self.id}')">
                     Bitte das Feld ausfüllen.
                 </small>
             </div>
