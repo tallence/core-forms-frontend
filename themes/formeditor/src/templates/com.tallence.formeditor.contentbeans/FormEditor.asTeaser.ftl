@@ -31,8 +31,15 @@
 
     new Vue({
       el: '#formeditor-${self.contentId}',
-      data: {
-        message: 'Hello Vue!'
+      data: function () {
+        return  {
+            model: {
+                // create model variables for all elements, in case a more complex validation is required (e.g. radio- and checkBoxGroups)
+                <#list formElements as element>
+                    element_${element.id}: [],
+                </#list>
+            }
+          }
       },
       methods: {
           onSubmit: function() {

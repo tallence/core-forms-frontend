@@ -8,10 +8,11 @@
 
 <input class="form-check-input"
        type="checkbox"
-       name="${self.id}"
+       name="element_${self.id}"
        value="${option.value}"
        id="${optionId}"
-       v-validate="'required'" v-model="model.${self.id}"
+       <#--Needs a model, because only one checkBox of the checkBoxGroup is required, not all of them-->
+       v-validate="'required'" v-model="model.element_${self.id}"
        <#if option.selectedByDefault>checked="checked"</#if>
 />
 <label class="form-check-label" for="${optionId}">${optionValue}</label>

@@ -13,10 +13,10 @@
 
         <div class="row">
             <div class="input-checkbox">
-                <div class="form-check" :class="{'is-invalid': errors.has('${self.id}') }">
+                <div class="form-check" :class="{'is-invalid': errors.has('element_${self.id}') }">
                     <input class="form-check-input"
                            type="checkbox"
-                           name="${self.id}"
+                           name="element_${self.id}"
                            <#if isMandatory>v-validate="'required'"</#if>
                            id="${self.id}"/>
                     <label class="form-check-label" for="${self.id}">
@@ -33,7 +33,7 @@
 
                     </label>
                     <small class="error text-danger">
-                        Please select the checkbox.
+                        Bitte per Checkbox bestätigen.
                     </small>
                 </div>
             </div>

@@ -4,8 +4,8 @@
 <#assign validator = self.validator />
 <#assign isMandatory = self.mandatory />
 
-<div class="form__group" :class="{'is-invalid': errors.has('${self.id}') }">
-    <div class="input-radio clearfix${isMandatory?then(' mandatory','')}">
+<div class="form__group">
+    <div class="input-radio clearfix${isMandatory?then(' mandatory','')}" :class="{'is-invalid': errors.has('element_${self.id}') }">
 
         <div class="row">
             <div class="col-10">
@@ -43,8 +43,8 @@
         </#if>
 
         </div>
+        <small class="error text-danger">
+            Bitte eine Option wählen.
+        </small>
     </div>
-    <small class="error text-danger">
-        Please select an option.
-    </small>
 </div>

@@ -16,19 +16,31 @@
             </div>
         </div>
         <div class="row">
-            <div class="col" :class="{'is-invalid': errors.has('${self.id}') }">
+            <div class="col" :class="{'is-invalid': errors.has('element_${self.id}') }">
+
+                <#assign veeValExpr = ""/>
+                <#if validator.maxSize?has_content>
+                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "max: " + validator.maxSize />
+                </#if>
+                <#if validator.minSize?has_content>
+                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "min: " + validator.minSize />
+                </#if>
+                <#if hasRegexpValidator>
+                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "regex: /^" + validator.regexp.pattern() + "$/" />
+                </#if>
+                <#if isMandatory>
+                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "required: true" />
+                </#if>
+
                 <input type="text"
                        class="form-control"
-                       :class="{'is-invalid': errors.has('${self.id}') }"
-                ${validator.maxSize?has_content?then("max=" + validator.maxSize, "")}
-                ${validator.minSize?has_content?then("min=" + validator.minSize, "")}
-                ${hasRegexpValidator?then('pattern=' + validator.regexp.pattern(), '')}
+                       :class="{'is-invalid': errors.has(element_'${self.id}') }"
                        id="${self.id}"
-                       name="${self.id}"
+                       name="element_${self.id}"
                        value="${self.value!""}"
-                       <#if isMandatory>v-validate="'required'"</#if>>
+                       <#if veeValExpr?has_content>v-validate="{ ${veeValExpr} }"</#if>>
                 <small class="error text-danger">
-                    Please fill out this field.
+                    Bitte das Feld ausfüllen.
                 </small>
             </div>
         </div>

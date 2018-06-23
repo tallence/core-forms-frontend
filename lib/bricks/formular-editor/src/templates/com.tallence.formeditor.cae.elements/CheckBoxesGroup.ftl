@@ -4,8 +4,8 @@
 <#assign validator = self.validator />
 <#assign isMandatory = self.mandatory />
 
-<div class="form__group" :class="{'is-invalid': errors.has('${self.id}') }">
-    <div class="form-checkboxgroup clearfix${isMandatory?then(' mandatory','')}">
+<div class="form__group">
+    <div class="form-checkboxgroup clearfix${isMandatory?then(' mandatory','')}" :class="{'is-invalid': errors.has('element_${self.id}') }">
         <div class="row">
             <div class="col-10">
                 <p class="form-header">${self.name!""}${isMandatory?then(' *','')}</p>
@@ -45,6 +45,9 @@
                 </div>
             </#if>
         </div>
+        <small class="error text-danger">
+            Bitte mindestens eine CheckBox wählen.
+        </small>
 
     </div>
 </div>
