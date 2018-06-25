@@ -19,13 +19,13 @@
 
                 <#assign veeValExpr = ""/>
                 <#if validator.maxSize?has_content>
-                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "max_value: " + validator.maxSize />
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "max_value: " + validator.maxSize />
                 </#if>
                 <#if validator.minSize?has_content>
-                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "min_value: " + validator.minSize />
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "min_value: " + validator.minSize />
                 </#if>
                 <#if isMandatory>
-                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "required: true" />
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "required: true" />
                 </#if>
 
                 <input type="number"

@@ -19,7 +19,7 @@
 
                 <#assign veeValExpr = "email: true"/>
                 <#if isMandatory>
-                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "required: true" />
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "required: true" />
                 </#if>
 
                 <input class="form-control"

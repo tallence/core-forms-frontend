@@ -20,16 +20,16 @@
 
                 <#assign veeValExpr = ""/>
                 <#if validator.maxSize?has_content>
-                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "max: " + validator.maxSize />
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "max: " + validator.maxSize />
                 </#if>
                 <#if validator.minSize?has_content>
-                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "min: " + validator.minSize />
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "min: " + validator.minSize />
                 </#if>
                 <#if hasRegexpValidator>
-                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "regex: /^" + validator.regexp.pattern() + "$/" />
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "regex: /^" + validator.regexp.pattern() + "$/" />
                 </#if>
                 <#if isMandatory>
-                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "required: true" />
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "required: true" />
                 </#if>
 
                 <input type="text"

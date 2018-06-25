@@ -18,7 +18,7 @@
 
                 <#assign veeValExpr = "size: " + validator.maxSize />
                 <#if isMandatory>
-                    <#assign veeValExpr = veeValExpr + (veeValExpr?has_content?then(", ", "")) + "required: true" />
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "required: true" />
                 </#if>
 
                 <input class="form-control-file"
