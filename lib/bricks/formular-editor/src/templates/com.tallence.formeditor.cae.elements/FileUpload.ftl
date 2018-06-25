@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col" :class="{'is-invalid': errors.has('element_${self.id}') }">
+            <div class="col" :class="{'is-invalid': errors.has('${self.technicalName}') }">
 
                 <#assign veeValExpr = "size: " + validator.maxSize />
                 <#if isMandatory>
@@ -22,12 +22,12 @@
                 </#if>
 
                 <input class="form-control-file"
-                       :class="{'is-invalid': errors.has('element_${self.id}') }"
+                       :class="{'is-invalid': errors.has('${self.technicalName}') }"
                        type="file"
-                       name="element_${self.id}"
+                       name="${self.technicalName}"
                        id="${self.id}"
                        <#if veeValExpr?has_content>v-validate="{ ${veeValExpr} }"</#if>>
-                <small class="error text-danger" v-if="errors.has('element_${self.id}')">
+                <small class="error text-danger" v-if="errors.has('${self.technicalName}')">
                     Bitte eine Datei hochladen, die maximal ${validator.maxSize}Kb groß ist.
                 </small>
             </div>

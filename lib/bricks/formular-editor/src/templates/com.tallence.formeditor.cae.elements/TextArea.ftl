@@ -24,10 +24,10 @@
                           :class="{'is-invalid': errors.has(element_'${self.id}') }"
                           maxlength="500"
                           id="${self.id}"
-                          name="element_${self.id}"
+                          name="${self.technicalName}"
                           rows="${amountRows}"
                           <#if isMandatory>v-validate="'required'"</#if>></textarea>
-                <small class="error text-danger" v-if="errors.has('element_${self.id}')">
+                <small class="error text-danger" v-if="errors.has('${self.technicalName}')">
                     Bitte das Feld ausfüllen.
                 </small>
             </div>

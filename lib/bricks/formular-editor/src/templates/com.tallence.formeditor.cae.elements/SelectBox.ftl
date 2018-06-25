@@ -16,11 +16,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col" :class="{'is-invalid': errors.has('element_${self.id}') }">
+            <div class="col" :class="{'is-invalid': errors.has('${self.technicalName}') }">
 
                 <select class="select form-control"
-                        :class="{'is-invalid': errors.has('element_${self.id}') }"
-                        name="element_${self.id}"
+                        :class="{'is-invalid': errors.has('${self.technicalName}') }"
+                        name="${self.technicalName}"
                         id="${self.id}"
                         <#if isMandatory>v-validate="'required'"</#if>>
                     <option value=""><@bp.message "cae-form-select-default"/></option>
@@ -32,7 +32,7 @@
                     </option>
                 </#list>
                 </select>
-                <small class="error text-danger" v-if="errors.has('element_${self.id}')">
+                <small class="error text-danger" v-if="errors.has('${self.technicalName}')">
                     Bitte eine Option wählen.
                 </small>
             </div>

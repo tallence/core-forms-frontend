@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col" :class="{'is-invalid': errors.has('element_${self.id}') }">
+            <div class="col" :class="{'is-invalid': errors.has('${self.technicalName}') }">
 
                 <#assign veeValExpr = ""/>
                 <#if validator.maxSize?has_content>
@@ -36,10 +36,10 @@
                        class="form-control"
                        :class="{'is-invalid': errors.has(element_'${self.id}') }"
                        id="${self.id}"
-                       name="element_${self.id}"
+                       name="${self.technicalName}"
                        value="${self.value!""}"
                        <#if veeValExpr?has_content>v-validate="{ ${veeValExpr} }"</#if>>
-                <small class="error text-danger" v-if="errors.has('element_${self.id}')">
+                <small class="error text-danger" v-if="errors.has('${self.technicalName}')">
                     Bitte das Feld ausfüllen.
                 </small>
             </div>

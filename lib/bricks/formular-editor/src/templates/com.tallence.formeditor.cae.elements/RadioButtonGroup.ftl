@@ -5,7 +5,7 @@
 <#assign isMandatory = self.mandatory />
 
 <div class="form__group">
-    <div class="input-radio clearfix${isMandatory?then(' mandatory','')}" :class="{'is-invalid': errors.has('element_${self.id}') }">
+    <div class="input-radio clearfix${isMandatory?then(' mandatory','')}" :class="{'is-invalid': errors.has('${self.technicalName}') }">
 
         <div class="row">
             <div class="col-10">
@@ -43,7 +43,7 @@
         </#if>
 
         </div>
-        <small class="error text-danger" v-if="errors.has('element_${self.id}')">
+        <small class="error text-danger" v-if="errors.has('${self.technicalName}')">
             Bitte eine Option wählen.
         </small>
     </div>
