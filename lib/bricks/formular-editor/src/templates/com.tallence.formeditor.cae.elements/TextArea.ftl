@@ -17,11 +17,11 @@
         </div>
 
         <div class="row">
-            <div class="col" :class="{'is-invalid': errors.has(element_'${self.id}') }">
+            <div class="col" :class="{'is-invalid': errors.has('${self.technicalName}') }">
             <#assign rows = self.rows!""/>
             <#assign amountRows = rows?has_content?then(rows, 4)/>
                 <textarea class="form-control"
-                          :class="{'is-invalid': errors.has(element_'${self.id}') }"
+                          :class="{'is-invalid': errors.has('${self.technicalName}') }"
                           maxlength="500"
                           id="${self.id}"
                           name="${self.technicalName}"

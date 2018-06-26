@@ -34,7 +34,7 @@
 
                 <input type="text"
                        class="form-control"
-                       :class="{'is-invalid': errors.has(element_'${self.id}') }"
+                       :class="{'is-invalid': errors.has('${self.technicalName}') }"
                        id="${self.id}"
                        name="${self.technicalName}"
                        value="${self.value!""}"

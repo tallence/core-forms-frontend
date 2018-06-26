@@ -30,7 +30,7 @@
 
                 <input type="number"
                        class="form-control"
-                       :class="{'is-invalid': errors.has(element_'${self.id}') }"
+                       :class="{'is-invalid': errors.has('${self.technicalName}') }"
                        id="${self.id}"
                        value="${self.value!""}"
                        name="${self.technicalName}"
