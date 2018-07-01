@@ -15,13 +15,23 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" :class="{'is-invalid': errors.has('${self.technicalName}') }">
+
+                <#assign veeValExpr = "email: true"/>
+                <#if isMandatory>
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "required: true" />
+                </#if>
+
                 <input class="form-control"
+                       :class="{'is-invalid': errors.has('${self.technicalName}') }"
                        type="email"
                        maxlength="128"
                        id="${self.id}"
-                       name="${self.id}"
-                ${isMandatory?then("required",'')}/>
+                       name="${self.technicalName}"
+                       <#if veeValExpr?has_content>v-validate="{ ${veeValExpr} }"</#if>>
+                <small class="error text-danger" v-if="errors.has('${self.technicalName}')">
+                    Bitte Ihre E-Mail eingeben.
+                </small>
             </div>
         </div>
     </div>

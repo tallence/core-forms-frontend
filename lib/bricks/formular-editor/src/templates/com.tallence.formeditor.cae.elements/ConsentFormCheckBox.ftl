@@ -13,11 +13,11 @@
 
         <div class="row">
             <div class="input-checkbox">
-                <div class="form-check">
+                <div class="form-check" :class="{'is-invalid': errors.has('${self.technicalName}') }">
                     <input class="form-check-input"
                            type="checkbox"
-                           name="${self.id}"
-                           ${isMandatory?then(' required','')}
+                           name="${self.technicalName}"
+                           <#if isMandatory>v-validate="'required'"</#if>
                            id="${self.id}"/>
                     <label class="form-check-label" for="${self.id}">
 
@@ -28,10 +28,13 @@
                             "<a href='" + cm.getLink(self.linkTarget) + "' title='$1'>$1</a>",
                             "r")?no_esc}
                         <#else>
-                            ${self.hint}
+                            ${self.hint!""}
                         </#if>
 
                     </label>
+                    <small class="error text-danger" v-if="errors.has('${self.technicalName}')">
+                        Bitte per Checkbox bestätigen.
+                    </small>
                 </div>
             </div>
 

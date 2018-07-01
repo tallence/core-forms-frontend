@@ -16,13 +16,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
-            <#assign options = self.options![]/>
+            <div class="col" :class="{'is-invalid': errors.has('${self.technicalName}') }">
 
-                <select class="select form-control" name="${self.id}"
-                        id="${self.id}" ${isMandatory?then("required",'')}>
+                <select class="select form-control"
+                        :class="{'is-invalid': errors.has('${self.technicalName}') }"
+                        name="${self.technicalName}"
+                        id="${self.id}"
+                        <#if isMandatory>v-validate="'required'"</#if>>
                     <option value=""><@bp.message "cae-form-select-default"/></option>
-                <#list options as option>
+                <#list self.options![] as option>
                     <option
                         value="${option.value}"
                         <#if option.selectedByDefault>selected="selected"</#if>>
@@ -30,6 +32,9 @@
                     </option>
                 </#list>
                 </select>
+                <small class="error text-danger" v-if="errors.has('${self.technicalName}')">
+                    Bitte eine Option wählen.
+                </small>
             </div>
         </div>
     </div>

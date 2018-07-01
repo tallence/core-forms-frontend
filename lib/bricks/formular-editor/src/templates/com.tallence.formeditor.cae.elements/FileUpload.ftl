@@ -14,13 +14,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" :class="{'is-invalid': errors.has('${self.technicalName}') }">
+
+                <#assign veeValExpr = "size: " + validator.maxSize />
+                <#if isMandatory>
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "required: true" />
+                </#if>
+
                 <input class="form-control-file"
+                       :class="{'is-invalid': errors.has('${self.technicalName}') }"
                        type="file"
-                       name="${self.id}"
+                       name="${self.technicalName}"
                        id="${self.id}"
-                       ${isMandatory?then("required",'')}
-                       data-max-file-size="${validator.maxSize}">
+                       <#if veeValExpr?has_content>v-validate="{ ${veeValExpr} }"</#if>>
+                <small class="error text-danger" v-if="errors.has('${self.technicalName}')">
+                    Bitte eine Datei hochladen, die maximal ${validator.maxSize}Kb groß ist.
+                </small>
             </div>
         </div>
     </div>

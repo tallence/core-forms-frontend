@@ -9,11 +9,48 @@
 <#assign formElements=form.parseFormElements(self)/>
 <#assign link=cm.getLink(self, "formEditorSubmit") />
 
-<form action="${link}" class="form" method="post" enctype="multipart/form-data">
-    <div class="container">
-        <#list formElements as element>
-            <@cm.include self=element/>
-        </#list>
-        <button class="btn btn-primary">Form submit</button>
-    </div>
-</form>
+<div id="formeditor-${self.contentId}">
+    <form action="${link}" class="form" method="post" enctype="multipart/form-data" v-on:submit.prevent="onSubmit">
+        <div class="container">
+            <#list formElements as element>
+                <@cm.include self=element/>
+            </#list>
+            <button class="btn btn-primary" type="submit" :disabled="errors.any()">Form submit</button>
+        </div>
+    </form>
+</div>
+
+
+<#--Vue.js example. TODO use es6 import statements in js-file of the theme or brick and include vue.js in package.json-->
+
+<script src="https://cdn.jsdelivr.net/npm/vee-validate@latest/dist/vee-validate.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+
+<script>
+    Vue.use(VeeValidate);
+
+    new Vue({
+      el: '#formeditor-${self.contentId}',
+      data: function () {
+        return  {
+            model: {
+                <#list formElements as element>
+                    ${element.technicalName}: [],
+                </#list>
+            }
+          }
+      },
+      methods: {
+          onSubmit: function() {
+            this.$validator.validateAll().then((valid) => {
+                console.debug('form is valid: ', valid);
+                if (valid) {
+                    document.querySelector('#formeditor-${self.contentId} form').submit();
+                }
+            }).catch((err) => {
+                console.error('errors exist', this.errors)
+            });
+          }
+      }
+    });
+</script>

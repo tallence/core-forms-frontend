@@ -15,15 +15,29 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" :class="{'is-invalid': errors.has('${self.technicalName}') }">
+
+                <#assign veeValExpr = ""/>
+                <#if validator.maxSize?has_content>
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "max_value: " + validator.maxSize />
+                </#if>
+                <#if validator.minSize?has_content>
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "min_value: " + validator.minSize />
+                </#if>
+                <#if isMandatory>
+                    <#assign veeValExpr = (veeValExpr?has_content?then(veeValExpr + ", ", "")) + "required: true" />
+                </#if>
+
                 <input type="number"
                        class="form-control"
-                ${validator.maxSize?has_content?then("max=" + validator.maxSize, "")}
-                ${validator.minSize?has_content?then("min=" + validator.minSize, "")}
+                       :class="{'is-invalid': errors.has('${self.technicalName}') }"
                        id="${self.id}"
                        value="${self.value!""}"
-                       name="${self.id}"
-                ${isMandatory?then('required','')}>
+                       name="${self.technicalName}"
+                       <#if veeValExpr?has_content>v-validate="{ ${veeValExpr} }"</#if>>
+                <small class="error text-danger" v-if="errors.has('${self.technicalName}')">
+                    Bitte das Feld ausfüllen.
+                </small>
             </div>
         </div>
     </div>
