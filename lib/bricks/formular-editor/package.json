@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "jquery": "3.2.1",
     "@coremedia/sass-utils": "file:../../sass/utils"
   },
   "main": "src/js/index.js"
