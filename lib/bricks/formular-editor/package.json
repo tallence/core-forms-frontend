@@ -4,8 +4,7 @@
   "private": true,
   "dependencies": {
     "jquery": "3.2.1",
-    "@coremedia/sass-utils": "file:../../sass/utils",
-    "@coremedia/brick-bootstrap": "file:../bootstrap"
+    "@coremedia/sass-utils": "file:../../sass/utils"
   },
   "main": "src/js/index.js"
 }
