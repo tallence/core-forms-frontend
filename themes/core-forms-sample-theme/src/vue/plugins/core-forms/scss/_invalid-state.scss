@@ -1,0 +1,17 @@
+.core-forms__field.is-invalid {
+  input, textarea, select {
+    @extend .is-invalid;
+  }
+
+  input.custom-control-input ~ .custom-control-label {
+    color: $core-forms-text-color;
+  }
+
+  .required-asterisk:after {
+    color: $core-forms-error-color;
+  }
+
+  .invalid-feedback {
+    display: block;
+  }
+}

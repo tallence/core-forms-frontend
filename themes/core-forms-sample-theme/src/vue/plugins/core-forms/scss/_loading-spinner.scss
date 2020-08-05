@@ -1,0 +1,70 @@
+@keyframes core-forms-app-submit-animation {
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+.core-forms__spinner {
+  $spinner: &;
+  width: 100%;
+  min-height: 200px;
+  background-size: $core-forms-spinner-size $core-forms-spinner-size;
+
+  &--sm {
+    min-height: 46px;
+  }
+
+  &-overlay {
+    position: fixed;
+    z-index: 7500;
+    top: -3px;
+    bottom: -3px;
+    left: -3px;
+    right: -3px;
+    background: rgba($core-forms-back-color, .8);
+    display: flex;
+    align-items: center;
+
+    & > div {
+      position: relative;
+      margin: 0 auto;
+      width: 500px;
+      max-width: 90%;
+      background: $core-forms-back-color;
+      padding: 12px;
+      border: 2px solid $core-forms-back-color;
+    }
+
+    #{$spinner}__content {
+      text-align: center;
+      padding: 15px;
+    }
+
+    #{$spinner}__progress {
+      z-index: 3;
+      height: 8px;
+      background: darken($core-forms-back-color, 10%);
+      overflow: hidden;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      &-done {
+        background-color: $core-forms-primary-color;
+        background-image: repeating-linear-gradient(
+            45deg,
+            $core-forms-primary-color,
+            $core-forms-primary-color .75rem,
+            rgba($core-forms-primary-color, .25) .75rem,
+            rgba($core-forms-primary-color, .25) 1.5rem
+        );
+        background-size: 200% 200%;
+        animation: core-forms-app-submit-animation 10s linear infinite;
+        animation-direction: reverse;
+        height: 100%;
+        transition: width 0.35s ease;
+      }
+    }
+  }
+}

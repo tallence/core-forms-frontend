@@ -1,9 +1,0 @@
-{
-  "name": "@coremedia/brick-formular-editor",
-  "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "@coremedia/sass-utils": "file:../../sass/utils"
-  },
-  "main": "src/js/index.js"
-}

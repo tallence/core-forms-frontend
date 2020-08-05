@@ -1,0 +1,28 @@
+/*
+include core forms base styles
+*/
+
+@import '../../vue/plugins/core-forms/scss/core-forms';
+
+//this mixin will create a column div with a right margin, bootstrap itself offers only left margin.
+@include create-column-offset-right($grid-breakpoints, $grid-columns);
+
+/*
+include datepicker plugin style
+*/
+
+@import '../../vue/shared/date-picker-plugin/style';
+
+//add custom app styles?
+
+.core-forms__success {
+  &-text {
+    margin-bottom: 20px;
+  }
+}
+
+/* set spinner */
+
+.core-forms__spinner {
+  background: url('../../img/spinner.svg') center center no-repeat;
+}

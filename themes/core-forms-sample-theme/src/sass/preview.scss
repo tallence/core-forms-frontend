@@ -1,0 +1,22 @@
+/*! Theme core-forms-sample: Preview Styles */
+// ### VARIABLES ###
+
+//@import "variables/...";
+
+// Dependency variables
+
+@import "?smart-import-variables";
+
+// ... add third-party dependencies here (after smart-import-variables)
+
+// ### PARTIALS ###
+
+// Dependency partials
+
+// ... add third-party dependencies here (before smart-import-partials)
+
+@import "?smart-import-partials";
+
+// Own partials
+
+//@import "partials/...";
