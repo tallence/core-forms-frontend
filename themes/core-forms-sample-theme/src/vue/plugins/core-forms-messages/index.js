@@ -19,7 +19,7 @@ const CoreFormsMessagesPlugin = {
       self._addMessages(newMessage);
     }
 
-    Vue.prototype.$getFormsMessage = function (key, value) {
+    Vue.prototype.$getFormsMessage = function (key) {
       return self._MESSAGES[key] || key
     }
 

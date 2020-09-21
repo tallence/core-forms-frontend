@@ -8,9 +8,10 @@ import Vue from "vue";
  * expects the remote url to be stored in applicationData.remoteUrl
  *
  * @param commit
+ * @param loadUrl
  * @returns {Promise<unknown>}
  */
-export const loadForm = ({commit, getters}, loadUrl) => {
+export const loadForm = ({commit}, loadUrl) => {
     commit(FORM_SOURCE, loadUrl);
     return new Promise((resolve, reject) => {
         commit(FORM_LOADING, true);

@@ -85,7 +85,7 @@ const CoreFormsValidationPlugin = {
      * directive to check if single field validation messages are enabled
      */
     Vue.directive('validationSingleErrorVisible', {
-      inserted: function (el, binding, vnode) {
+      inserted: function (el) {
         if (!_VALIDATION_CONFIG.showFieldValidation && el.parentNode) {
           el.parentNode.removeChild(el)
         }
@@ -96,7 +96,7 @@ const CoreFormsValidationPlugin = {
      * directive to check if validation summary is enabled or not
      */
     Vue.directive('validationErrorSummaryVisible', {
-      inserted: function (el, binding, vnode) {
+      inserted: function (el) {
         if (!_VALIDATION_CONFIG.showValidationSummary && el.parentNode) {
           el.parentNode.removeChild(el)
         }

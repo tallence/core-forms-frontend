@@ -11,7 +11,7 @@ const _createEvent = (eventName) => {
 
 export const debounceFn = (fn, delay) => {
     let timeoutID = null;
-    return () => {
+    return function() {
         clearTimeout(timeoutID);
         let args = arguments;
         let that = this;

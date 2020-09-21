@@ -24,7 +24,6 @@
     "@coremedia/brick-preview": "^1.0.0",
     "webpack": "^4.0.0",
     "bootstrap": "^4.4.1",
-    "jquery": "^3.4.1",
     "vue": "^2.6.10",
     "vee-validate": "^3.2.2",
     "vue-recaptcha": "^1.3.0",
