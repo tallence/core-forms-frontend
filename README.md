@@ -3,7 +3,7 @@
 This is an example for the frontend part of the [Core-Forms](https://github.com/tallence/core-forms) repository. \
 It contains a theme for the CoreMedia Frontend-Development Workspace.
 
-The theme itself contains 2 samples of a VueJS based form application.
+Tested with *cmcc-10-1907* and *cmcc-10-2004*.
 
 ### Installation
 

@@ -1,5 +1,7 @@
 # CoreForms Sample Theme
 
+Sample theme as a starting point for integrating CoreForms into your own theme.
+
 ## VueJS Application
 * core forms frontend integration implemented as [_VueJS_](https://github.com/vuejs/vue) plugin.
 * dependencies: [_Vuex_](https://github.com/vuejs/vuex), [_VueResource_](https://github.com/pagekit/vue-resource)

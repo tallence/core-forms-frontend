@@ -6,7 +6,7 @@ module.exports = (env, argv) => {
 
   deepMerge(config, {
     resolve: {
-      extensions: ['*', '.js', '.vue', '.jsx'],
+      extensions: ['.js', '.vue'],
       alias: {
         'vue$': 'vue/dist/vue.min.js'
       }
@@ -21,14 +21,6 @@ module.exports = (env, argv) => {
               'vue-style-loader',
               'css-loader',
               'sass-loader'
-            ],
-            'sass': [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader?indentedSyntax'
-            ],
-            'js': [
-                'babel-loader'
             ]
           }
         }
