@@ -17,7 +17,6 @@ const CoreFormsPlugin = {
     if (!store) {
       throw new Error("Please provide vuex store.");
     }
-    console.log('registering store');
     store.registerModule("coreForms", coreStore);
     Vue.$coreFormsStore = coreStore;
 

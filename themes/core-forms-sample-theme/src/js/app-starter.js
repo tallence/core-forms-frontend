@@ -1,87 +1,85 @@
-import $ from 'jquery';
-
 import {CoreFormsEvents} from '../vue/plugins/core-forms';
 
 /**
- * this wraps the vue application inside a jquery plugin
+ * JS Wrapper to attach a new Vue app instance to an existing DOM node
  */
-(function ($) {
-  async function VueAppPlugin(element, appToUse) {
+export default class CoreFormsApplication {
 
-    const $element = $(element);
+  constructor(domNode, appToUse, eventListenerFn) {
+    this.node = domNode;
+
+    this.initApp(appToUse).then(() => this.addEventListener(eventListenerFn));
+  }
+
+  async initApp(appToUse) {
     const uniqueId = '_' + Math.random().toString(36).substr(2, 9)
-    $element.attr('core-forms-unique-id', uniqueId)
+    this.node.setAttribute('core-forms-unique-id', uniqueId);
 
-    const applicationData = $element.data();
-    /*
-    some important data needs to be passed to the vue app,
-    required data is provided via data-attributes, they will get stored in a vuex store for further usage inside the app
-    */
-    const appData = {};
-    appData['formUrl'] = applicationData['appRemoteUrl'];
-    appData['recaptchaKey'] = applicationData['appRecaptchaSitekey'];
+    await appToUse.init(`[core-forms-unique-id="${uniqueId}"]`, this.getAppData(), this.getMessages());
+  }
 
-    /*
-    see locales/defaults.js for required messages; they can be overridden during init
-    in this example they are part of the dom structure, feel free to modify this behavior
-    */
-    const messages = {
-      submitButton: applicationData['messagesSubmitButton'],
-      submitActive: applicationData['messagesSubmitActive'],
-      inputClose: applicationData['messagesInputClose'],
-      inputOptionDefault: applicationData['messagesInputOptionDefault'],
-      inputFileEmpty: applicationData['messagesInputFileEmpty'],
-      inputFileRemove: applicationData['messagesInputFileRemove'],
-      inputFileBrowse: applicationData['messagesInputFileBrowse'],
-      inputMandatory: applicationData['messagesInputMandatory'],
-      inputCopyMail: applicationData['messagesCopyMail'],
-      successPageTitle: applicationData['messagesSuccessPageTitle'],
-      successPageText: applicationData['messagesSuccessPageText'],
-      successPageButton: applicationData['messagesSuccessPageButton'],
-      errorPageTitle: applicationData['messagesErrorPageTitle'],
-      errorPageText: applicationData['messagesErrorPageText'],
-      errorPageButton: applicationData['messagesErrorPageButton'],
-      errorGlobal: applicationData['messagesErrorGlobal']
+  getAppData() {
+    return {
+      formUrl:        this.node.dataset['appRemoteUrl'],
+      recaptchaKey:   this.node.dataset['appRecaptchaSitekey']
     }
+  }
 
-    appToUse.init(`[core-forms-unique-id="${uniqueId}"]`, appData, messages).then((_vueInstance_) => {
+  getMessages() {
+    return {
+      submitButton:       this.node.dataset['messagesSubmitButton'],
+      submitActive:       this.node.dataset['messagesSubmitActive'],
+      inputClose:         this.node.dataset['messagesInputClose'],
+      inputOptionDefault: this.node.dataset['messagesInputOptionDefault'],
+      inputFileEmpty:     this.node.dataset['messagesInputFileEmpty'],
+      inputFileRemove:    this.node.dataset['messagesInputFileRemove'],
+      inputFileBrowse:    this.node.dataset['messagesInputFileBrowse'],
+      inputMandatory:     this.node.dataset['messagesInputMandatory'],
+      successPageTitle:   this.node.dataset['messagesSuccessPageTitle'],
+      successPageText:    this.node.dataset['messagesSuccessPageText'],
+      successPageButton:  this.node.dataset['messagesSuccessPageButton'],
+      errorPageTitle:     this.node.dataset['messagesErrorPageTitle'],
+      errorPageText:      this.node.dataset['messagesErrorPageText'],
+      errorPageButton:    this.node.dataset['messagesErrorPageButton'],
+      errorGlobal:        this.node.dataset['messagesErrorGlobal']
+    }
+  }
 
-      /**
-       * the core forms plugin of the app itself sends an global event for various actions, e.g. form loaded, request failed, form submitted, ...
-       * all events are emitted at root level of the application.
-       * this is an example how you can access it from your scripts, it might be required for tracking user data (e.g. Google Analytics/TagManager) or similar.
-       */
-      _vueInstance_.$on(CoreFormsEvents.GLOBAL_EVENT, (event) => {
+  addEventListener(eventListenerFn) {
 
-        switch (event.trigger) {
+    const listener = (event) => {
+      if (event['coreForms'] != null) {
+
+        if (typeof eventListenerFn == "function") {
+          eventListenerFn(event['coreForms']['trigger'], event['coreForms']['data']);
+          return;
+        }
+
+        switch (event['coreForms']['trigger']) {
           case CoreFormsEvents.SUBMIT_CONFIRMED:
-            console.info('EVENTLOG: success confirmed', event.data);
+            console.log('success confirmed');
             break;
           case CoreFormsEvents.APPLICATION_LOADED:
-            console.info('EVENTLOG: app loaded', event.data);
+            console.log('app loaded');
             break;
           case CoreFormsEvents.FORM_LOADED:
-            console.info('EVENTLOG: form loaded', event.data);
+            console.log('form loaded');
             break;
           case CoreFormsEvents.FORM_FAILED:
-            console.info('EVENTLOG: form failed', event.data);
+            console.log('form failed');
             break;
           case CoreFormsEvents.FORM_SUBMITTED:
-            console.info('EVENTLOG: form submitted', event.data);
+            console.log('form submitted');
             break;
           default:
         }
+      }
+    }
 
-      });
-    });
+    if (typeof eventListenerFn == "function") {
+      this.node.removeEventListener(CoreFormsEvents.GLOBAL_EVENT, listener);
+    }
+    this.node.addEventListener(CoreFormsEvents.GLOBAL_EVENT, listener);
   }
-
-  $.fn.vueSampleApp = function (appToUse) {
-    this.each(async function () {
-      new VueAppPlugin(this, appToUse)
-    });
-    return this;
-  };
-
-})($);
+}
 

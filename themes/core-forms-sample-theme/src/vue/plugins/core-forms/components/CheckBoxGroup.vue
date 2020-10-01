@@ -17,7 +17,7 @@
 
 <script>
   import CheckBox from './CheckBox';
-  import _ from 'lodash'
+  import {arrayUnion, arrayWithout} from '../common/util'
 
   /**
    * this is required because the vee validator provider only tracks one v-model.
@@ -41,7 +41,7 @@
     },
     methods: {
       handleValueChange(option, isSelected) {
-        this.$emit('input', isSelected ? _.union(this.value, [option]) : _.without(this.value, option));
+        this.$emit('input', isSelected ? arrayUnion(this.value, [option]) : arrayWithout(this.value, option));
       }
     }
   }

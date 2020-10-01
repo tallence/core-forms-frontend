@@ -6,10 +6,10 @@ export const CoreFormsConstants = {
 }
 
 const TYPE_MAPPINGS = {
-  'ZipField':           'TextField',
-  'PhoneField':         'TextField',
-  'StreetNumberField':  'TextField',
-  'FaxField':           'TextField',
+    'ZipField':           'TextField',
+    'PhoneField':         'TextField',
+    'StreetNumberField':  'TextField',
+    'FaxField':           'TextField',
 }
 
 /**
@@ -30,7 +30,7 @@ export const normalizeFormDefinition = (formData) => {
 
         element.studioType = element.type;
         if (TYPE_MAPPINGS[element.type] != null) {
-          element.type = TYPE_MAPPINGS[element.type];
+            element.type = TYPE_MAPPINGS[element.type];
         }
 
         //pre initialize values, simply make sure the properties exist
@@ -63,7 +63,19 @@ export const isFormFieldTypeSupported = (type) => {
     return type != null && (type in Vue.options.components) && ((Vue.options.$coreFormsFields || []).indexOf(type) !== -1);
 }
 
+export const arrayUnion = (...arrs) => {
+    return arrs.reduce((arr1, arr2) => [...new Set([...arr1, ...arr2])])
+}
+
+export const arrayWithout = (array, elem) => {
+    return array.filter(function(value) {
+        return value !== elem;
+    })
+}
+
 export default {
     isFormFieldTypeSupported,
-    normalizeFormDefinition
+    normalizeFormDefinition,
+    arrayUnion,
+    arrayWithout
 }

@@ -11,14 +11,6 @@ Sample theme as a starting point for integrating CoreForms into your own theme.
 * (optional) spam protection with Google Recaptcha. 
 * markup and styling based on [_Bootstrap 4_](https://github.com/twbs/bootstrap).
 
-
-#### jQuery Wrapper
-
-The app is wrapped in a simple jQuery plugin.\
-The plugin is responsible for reading all data attributes, setting up the application, passing data to the app and/or listening to events provided by the app.
-
-Please refer to the source for more information: ``_THEME_ROOT_/src/js/app-starter.js``
-
 #### Core Forms Plugin
 
 This plugin contains the main logic of the application: loading data, submitting data, rendering of the complete form, client side validation, ...\
