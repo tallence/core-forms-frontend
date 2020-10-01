@@ -7,7 +7,10 @@ import CoreFormsApplication from "./app-starter";
 import CoreFormsSimpleSampleApp from '../vue/vue-simple-sample-app/main';
 ((d) => {
   d.querySelectorAll('[data-form="vue-sample-app"]').forEach((node) => {
-    new CoreFormsApplication(node, CoreFormsSimpleSampleApp);
+    new CoreFormsApplication(node, CoreFormsSimpleSampleApp, (eventName, eventData) => {
+      //sample for custom event listener (optional)
+      console.log(`received the event '${eventName}' with data:`, eventData);
+    });
   })
 })(document);
 
