@@ -1,5 +1,5 @@
 const {webpackConfig} = require("@coremedia/theme-utils");
-const deepMerge = require("@coremedia/theme-utils/configs/utils/deepMerge");
+const deepMerge = require("./deepMerge");
 
 module.exports = (env, argv) => {
   const config = webpackConfig(env, argv);
