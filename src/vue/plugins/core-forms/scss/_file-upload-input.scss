@@ -1,0 +1,60 @@
+.core-forms__file-upload-input {
+
+  input[type=file] {
+    display: none;
+  }
+
+  .custom-file-input ~ .custom-file-label {
+    &:after {
+      background-color: $core-forms-primary-color;
+      color: color-yiq($core-forms-primary-color);
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      &:after {
+        background-color: darken($core-forms-primary-color, 7.5%);
+        color: color-yiq(darken($core-forms-primary-color, 7.5%));
+      }
+    }
+  }
+
+  .custom-file-icon-only {
+    .custom-file-input ~ .custom-file-label {
+      overflow: hidden;
+
+      &:after {
+        content: '\01F5C1';
+        font-size: 1.25em;
+        margin: -.125em 0;
+      }
+    }
+  }
+
+  .core-forms__file-remove {
+    display: none;
+    float: none;
+    cursor: pointer;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 1.5em;
+    vertical-align: -.1em;
+  }
+
+  .custom-file--selected {
+    .custom-file-label {
+      padding-left: 2em;
+    }
+
+    .core-forms__file-remove {
+      display: block;
+    }
+  }
+
+}
+
+

@@ -1,0 +1,22 @@
+{
+  "name": "Core Forms Sample",
+  "description": "A dummy theme with a sample implementation for the core forms frontend.",
+  "styles": [
+    {
+      "type": "webpack",
+      "src": "src/sass/core-forms-sample.scss"
+    }
+  ],
+  "scripts": [
+    {
+      "type": "webpack",
+      "src": "src/js/core-forms-sample.js"
+    }
+  ],
+  "l10n": {
+    "bundleNames": [
+      "Core-forms-sample",
+      "Bricks"
+    ]
+  }
+}

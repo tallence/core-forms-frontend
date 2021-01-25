@@ -1,0 +1,23 @@
+/**
+create missing classes for adding a right margin to a column.
+this is required for the force linebreak feature of the form editor.
+
+based on original bootstrap 4 code for offset-left.
+ */
+
+@mixin create-column-offset-right($breakpoints, $columns) {
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      @for $i from 0 through ($columns - 1) {
+        @if not ($infix == "" and $i == 0) {
+          .offset#{$infix}-#{$i}-right {
+            $num: $i / $columns;
+            margin-right: if($num == 0, 0, percentage($num));
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,16 @@
+$core-forms-primary-color:    #425390 !default;
+$core-forms-error-color:      #f15060 !default;
+$core-forms-text-color:       #131313 !default;
+$core-forms-text-color-light: #676767 !default;
+$core-forms-back-color:       #ffffff !default;
+
+$core-forms-spinner-size:           32px !default;
+$core-forms-required-asterisk-char: '*' !default;
+
+@import 'mixins/column-offset';
+
+@import 'invalid-state';
+@import 'required_asterisk';
+@import 'file-upload-input';
+@import 'loading-spinner';
+@import 'error-box';

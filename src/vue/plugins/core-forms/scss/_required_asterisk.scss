@@ -1,0 +1,33 @@
+@mixin required-asterisk {
+  margin: 0 0 0 0.25em;
+  font-size: 0.75em;
+  vertical-align: .15em;
+  color: $core-forms-text-color-light;
+  content: $core-forms-required-asterisk-char;
+}
+
+.core-forms {
+
+  &__field {
+    .required-asterisk {
+      &:after {
+        @include required-asterisk();
+      }
+    }
+    & > label.required-asterisk {
+      &:after {
+        margin: 0;
+      }
+    }
+  }
+
+  &__required-hint.required-asterisk {
+    &:before {
+      @include required-asterisk();
+      margin: 0.25em 0 0 0;
+    }
+  }
+
+}
+
+

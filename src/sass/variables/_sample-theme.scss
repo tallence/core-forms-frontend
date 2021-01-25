@@ -1,0 +1,17 @@
+$TALLENCE_RED:    #f15060;
+$TALLENCE_BLUE:   #425390;
+
+/* set defaults for core forms */
+
+$core-forms-primary-color:    $TALLENCE_BLUE !default;
+$core-forms-error-color:      $TALLENCE_RED !default;
+$core-forms-text-color:       #121212 !default;
+$core-forms-text-color-light: #373A3C !default;
+$core-forms-back-color:       #fff !default;
+
+/* set bootstrap vars */
+
+$blue:        $TALLENCE_BLUE;
+$red:         $TALLENCE_RED;
+$body-color:  $core-forms-text-color;
+$text-muted:  $core-forms-text-color-light;
