@@ -31,32 +31,17 @@
 </template>
 
 <script>
-  import {isFormFieldTypeSupported} from "./common/util";
+  import FormElementVisibilityMixin from "./mixins/FormElementVisibilityMixin";
 
   export default {
+    mixins: [FormElementVisibilityMixin],
     props: {
       'form': {type: String, required: true},
-      'field': {type: Object, required: true},
       'validationRules': {type: Object, required: true},
       'hideMainLabel': {required: false, default: false},
       'hideHint': {required: false, default: false},
       'parentClass': {required: false, default: null, type: String},
       'labelClass': {required: false, default: null, type: String}
-    },
-
-    computed: {
-      isRendered() {
-        if (!this.field || !isFormFieldTypeSupported(this.field.type)) {
-          return false;
-        }
-        let advanced = this.field.advancedSettings;
-        if (advanced && advanced.visibility && advanced.visibility.activated === true) {
-          let relatedFieldValue = this.$store.getters["coreForms/getFormValue"](advanced.visibility.elementId);
-          let targetValue = advanced.visibility.value;
-          return Array.isArray(relatedFieldValue) ? relatedFieldValue.indexOf(targetValue) !== -1 : relatedFieldValue === targetValue;
-        }
-        return true;
-      }
     },
     methods: {
       /**
