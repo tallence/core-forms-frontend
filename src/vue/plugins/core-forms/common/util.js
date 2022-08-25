@@ -2,7 +2,8 @@ import Vue from "vue";
 
 export const CoreFormsConstants = {
     FORM_SUBMIT_URL:  'formActionUrl',
-    FORM_ELEMENTS:    'formElements'
+    FORM_ELEMENTS:    'formElements',
+    FORM_PAGES:       'formPages'
 }
 
 const TYPE_MAPPINGS = {
@@ -18,19 +19,37 @@ const TYPE_MAPPINGS = {
  * @returns {{error: string}|*}
  */
 export const normalizeFormDefinition = (formData) => {
+
     if (!formData[CoreFormsConstants.FORM_SUBMIT_URL]) {
         return {error: 'MISSING_REQUIRED_SUBMIT_URL'};
     }
-    if (!formData[CoreFormsConstants.FORM_ELEMENTS]) {
+    if (!formData[CoreFormsConstants.FORM_PAGES]) {
+
+      if (!formData[CoreFormsConstants.FORM_ELEMENTS]) {
         return {error: 'MISSING_FORM_ELEMENTS'};
+      } else {
+        console.warn('converting form elements to paged structure');
+        //wrap old form fields into single page
+        formData[CoreFormsConstants.FORM_PAGES] = [{
+          formElements: formData[CoreFormsConstants.FORM_ELEMENTS]
+        }];
+        delete formData[CoreFormsConstants.FORM_ELEMENTS];
+      }
     }
 
-    let _colCount = 0;
-    formData[CoreFormsConstants.FORM_ELEMENTS].forEach((element) => {
+    formData[CoreFormsConstants.FORM_PAGES].forEach((page, pageIndex) => {
+
+      if (page.id == null) {
+        page.id = 'generated_id_' + pageIndex;
+        //page.description = 'Lorem ipsum test 123';
+      }
+
+      let _colCount = 0;
+      page[CoreFormsConstants.FORM_ELEMENTS].forEach((element) => {
 
         element.studioType = element.type;
         if (TYPE_MAPPINGS[element.type] != null) {
-            element.type = TYPE_MAPPINGS[element.type];
+          element.type = TYPE_MAPPINGS[element.type];
         }
 
         //pre initialize values, simply make sure the properties exist
@@ -43,13 +62,16 @@ export const normalizeFormDefinition = (formData) => {
         /** detect forced line breaks, calculate remaining space in the row of this element */
         _colCount += element.advancedSettings.columnWidth;
         if (_colCount >= 12) {
-            _colCount = 0
+          _colCount = 0
         }
         if (_colCount !== 0 && element.advancedSettings.breakAfterElement === true) {
-            element.advancedSettings.rightMargin = 12 - _colCount;
-            _colCount = 0;
+          element.advancedSettings.rightMargin = 12 - _colCount;
+          _colCount = 0;
         }
+      });
     });
+
+    console.log('normalized', formData);
     return formData;
 }
 

@@ -5,3 +5,8 @@ export const FORM_DEFINITION = "FORM_DEFINITION";
 export const SET_FORM_VALUE = "SET_FORM_VALUE";
 export const RESET_FORM_VALUES = "RESET_FORM_VALUES";
 export const FORM_SOURCE = "FORM_SOURCE";
+
+export const SET_PAGE = "SET_PAGE";
+export const RESET_PAGE = "RESET_PAGE";
+export const SET_NEXT_PAGE = "SET_NEXT_PAGE";
+export const SET_PREV_PAGE = "SET_PREV_PAGE";

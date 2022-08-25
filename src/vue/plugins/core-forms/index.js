@@ -3,7 +3,7 @@ import CoreFormsMessagesPlugin from "../core-forms-messages";
 
 import CoreFormsUtils from './common/util';
 import {EventConstants, EventSender} from './common/events';
-import coreStore from "./store";
+import coreFormsStore from "./store";
 import FormElement from "./FormElement";
 import FormElementHint from "./components/FormElementHint";
 import ErrorContainer from "./components/ErrorContainer";
@@ -17,8 +17,8 @@ const CoreFormsPlugin = {
     if (!store) {
       throw new Error("Please provide vuex store.");
     }
-    store.registerModule("coreForms", coreStore);
-    Vue.$coreFormsStore = coreStore;
+    store.registerModule('coreForms', coreFormsStore);
+    Vue.$coreFormsStore = coreFormsStore;
 
     Vue.use(CoreFormsMessagesPlugin);
     Vue.use(CoreFormsValidationPlugin);

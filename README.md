@@ -3,10 +3,7 @@
 This is an example for the frontend part of the [Core-Forms](https://github.com/tallence/core-forms) repository.
 It contains a sample theme with minimal templates, Studio preview, required styles and Javascript files for the CoreMedia Frontend-Development Workspace.
 
-Tested with ``cmcc-10-1907``, ``cmcc-10-2004`` and ``cmcc-10-2010``.
-
-
-
+Tested with ``cmcc-10-1907``, ``cmcc-10-2004``, ``cmcc-10-2010`` and ``cmcc-11-2207``.
 
 ## Installation & Build
 
@@ -23,6 +20,7 @@ The sample theme has dependencies to the following CoreMedia frontend modules:
 * ``@coremedia/brick-page``
 * ``@coremedia/brick-preview``
 
+Use this sample theme as starting point, convert it to a brick or include it as it is into your existing theme via [Theme inheritance](https://documentation.coremedia.com/cmcc-11/current/webhelp/frontend-en/content/ThemeInheritance.html).
 
 
 ## VueJS Application

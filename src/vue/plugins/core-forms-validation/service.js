@@ -25,8 +25,14 @@ export default {
      */
     validateEmail(email) {
         let validationMailUrl;
-        if (Vue.$coreFormsStore) {
+
+        //TODO not working
+        try {
+          if (Vue.$coreFormsStore != null) {
             validationMailUrl = Vue.$coreFormsStore.getters['coreForms/getFormProperty']('mailValidationUrl');
+          }
+        } catch (err) {
+          console.debug('unable to call backend validation', err);
         }
 
         //if no remote validation url is set, skip remote validation

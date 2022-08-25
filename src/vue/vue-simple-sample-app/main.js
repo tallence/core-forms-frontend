@@ -58,20 +58,12 @@ export default {
     when you decided to use the DatePickerPlugin, then you can overwrite the default locale for the date picker.
     (defaults to the lang attribute of the page)
     */
-    //CoreFormsDatePickerFieldPlugin.config({locale: 'de'});
+    CoreFormsDatePickerFieldPlugin.config({locale: 'de'});
 
     return new Vue({
       store,
-      render: h => h(VueSimpleSampleApp, {
-        /*
-        the core forms plugins requires some data to bet set
-        you can pass those values to the app via props
-        */
-        props: {
-          formUrl: data.formUrl,
-          recaptchaKey: data.recaptchaKey
-        }
-      })
-    }).$mount(selector);
+      render: h => h(VueSimpleSampleApp),
+      provide: () => { return { ...data }}
+    }).$mount(selector)
   }
 }

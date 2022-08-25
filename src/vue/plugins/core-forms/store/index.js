@@ -13,7 +13,9 @@ const state = {
   /* raw form definition */
   formDefinition: null,
   /* formValues */
-  formValues: {}
+  formValues: {},
+  /* active form page */
+  activePageIndex: 0
 };
 
 export default {

@@ -18,7 +18,10 @@
       </label>
 
       <slot :validator="{valid, classes, invalid, validated}">
-        <!-- form field markup will be placed here -->
+        <!-- primary slot: form field markup will be placed here -->
+      </slot>
+      <slot name="secondary">
+        <!-- additional slot? -->
       </slot>
 
       <form-element-hint v-if="field.hint && !hideHint" :text="field.hint"/>

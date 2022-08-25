@@ -11,7 +11,9 @@ import base dependencies for the app
 import Vue from "vue";
 import VueRouterSampleApp from "./App";
 import router from './router';
-import store from './store';
+
+// this app doesn't require a Vuex store by itself, but the CoreFormsPlugin depends on it; you can use the base store from the core forms plugin
+import store from '../plugins/core-forms/store/base/store';
 
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
@@ -53,26 +55,21 @@ export default {
     console.log('starting vue router sample app with data', {data, texts});
 
     /*
-     this call simply stores initial data for the application itself,
-     you can pass the data to the app in other ways as well
-     */
-    await store.dispatch('setAppData', data);
-
-    /*
     init and config the core forms message plugin; store texts and translations
      */
-    await CoreFormsMessagesPlugin.config(texts);
+    await CoreFormsMessagesPlugin.config(texts)
 
     /*
     when you decided to use the DatePickerPlugin, then you can overwrite the default locale for the date picker.
     (defaults to the lang attribute of the page)
     */
-    //CoreFormsDatePickerFieldPlugin.config({locale: 'de'});
+    CoreFormsDatePickerFieldPlugin.config({locale: 'de'});
 
     return new Vue({
       router,
       store,
-      render: h => h(VueRouterSampleApp)
-    }).$mount(selector);
+      render: h => h(VueRouterSampleApp),
+      provide: () => { return { ...data }}
+    }).$mount(selector)
   }
 }
