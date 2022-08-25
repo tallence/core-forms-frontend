@@ -1,10 +1,14 @@
 const {webpackConfig} = require("@coremedia/theme-utils");
 const deepMerge = require("./deepMerge");
+const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = (env, argv) => {
   const config = webpackConfig(env, argv);
 
   deepMerge(config, {
+    plugins: [
+      new VueLoaderPlugin()
+    ],
     resolve: {
       extensions: ['.js', '.vue'],
       alias: {
