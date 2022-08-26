@@ -73,25 +73,6 @@ export const normalizeFormDefinition = (formData) => {
       })
     })
 
-    //TODO remove this block
-    let summaryPage = {
-      id: 'summary_page',
-      isSummaryPage: true,
-      title: 'Zusammenfassung',
-      description: 'An dieser Stelle sehen Sie alle Daten, die sie erfasst haben und übertragen werden.<br/>Bitte überprüfen Sie erneut die Richtigkeit.',
-      formElements: []
-    }
-
-    //extract consent form fields and move to last page
-    formData[CoreFormsConstants.FORM_PAGES].forEach((page, pageIndex) => {
-      let consentFields = page[CoreFormsConstants.FORM_ELEMENTS].filter(f => f.type === 'ConsentFormCheckBox')
-      consentFields.forEach(f => summaryPage.formElements.push(f));
-      page[CoreFormsConstants.FORM_ELEMENTS] = page[CoreFormsConstants.FORM_ELEMENTS].filter(f => f.type !== 'ConsentFormCheckBox')
-    });
-
-    formData[CoreFormsConstants.FORM_PAGES].push(summaryPage)
-    //TODO end
-
     return formData;
 }
 

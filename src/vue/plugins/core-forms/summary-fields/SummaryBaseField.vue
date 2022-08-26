@@ -1,7 +1,7 @@
 <template>
   <dl class="row" v-if="isRendered && isDisplayed">
-    <dt class="col-sm-3">{{ labelValue }}</dt>
-    <dd class="col-sm-9">{{ displayValue }}</dd>
+    <dt class="col-sm-3" :class="{'required-asterisk': isRequired && hasLabelValue }">{{ labelValue }}</dt>
+    <dd class="col-sm-9" :class="{'required-asterisk': isRequired && !hasLabelValue && hasValue }">{{ displayValue }}</dd>
   </dl>
 </template>
 
@@ -13,6 +13,9 @@ export default {
   mixins: [FormElementVisibilityMixin],
   props: ['field'],
   computed: {
+    isRequired() {
+      return this.field.validator.mandatory;
+    },
     isDisplayed() {
       return this.hasValue && this.displayValue != null
     },
@@ -21,6 +24,9 @@ export default {
     },
     displayValue() {
       return this.field.value
+    },
+    hasLabelValue() {
+      return this.labelValue != null && this.labelValue.length;
     },
     hasValue() {
       return this.field.value != null && this.field.value.length

@@ -1,17 +1,24 @@
 .core-forms__wizard {
   &--head {
     margin-bottom: $core-forms-wizard-margin;
+
     .nav-link.active {
       border-top: 3px solid $core-forms-primary-color;
     }
   }
 
   &--step {
-
+    /* currently not needed */
   }
 
   &--summary {
     margin-bottom: $core-forms-wizard-margin;
+
+    dt, dd {
+      &.required-asterisk:after {
+        @include required-asterisk();
+      }
+    }
   }
 
   &--footer {
