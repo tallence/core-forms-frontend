@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'spacer-area': inlineMode, 'core-forms__spinner__overlay': !inlineMode }">
+    <div :class="{'spacer-area': inlineMode, 'core-forms__spinner-overlay': !inlineMode }">
         <div>
             <div class="core-forms__spinner"></div>
             <div class="core-forms__spinner__content">

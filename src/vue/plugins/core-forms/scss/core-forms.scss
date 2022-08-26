@@ -17,3 +17,7 @@ $core-forms-wizard-margin:          25px !default;
 @import 'loading-spinner';
 @import 'wizard';
 @import 'error-box';
+
+.core-forms__app {
+  position: relative;
+}

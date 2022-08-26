@@ -106,7 +106,12 @@ export default {
         CoreFormsEventSender.send(CoreFormsEvents.VALIDATION_FAILED);
         return;
       }
-      this.$refs.spamProtection.execute();
+
+      if (this.hasNextFormPage) {
+        await this.navigateToNextPage();
+      } else {
+        this.$refs.spamProtection?.execute();
+      }
     },
     hasFieldErrorMessages(errors) {
       return Object.values(errors).filter(f => f.length !== 0).length
@@ -151,7 +156,7 @@ export default {
       CoreFormsEventSender.send(CoreFormsEvents.WIZARD_COMPLETED)
     },
 
-    onSubmitError() {
+    onSubmitError(error) {
       if (error == null || (error['globalError'] == null && error['fieldErrors'] == null)) {
         this.errorMessage = this.getFormsMessage('errorGlobal')
       } else {
