@@ -17,7 +17,11 @@ export const EventConstants = {
   //will be fired after the user clicked the button on the success page
   SUBMIT_CONFIRMED: 'core-forms.submit-confirmed',
 
+  //will be fired after the user clicked the button on the success page
   VALIDATION_FAILED: 'core-forms.validation-failed',
+  //will be fired after the user clicked the button on the success page
+  SPAM_PROTECT_FAILED: 'core-forms.spam-protect-failed',
+  SPAM_PROTECT_SUCCESS: 'core-forms.spam-protect-success',
 
   // those events will be fired when the form page changes
   WIZARD_STARTED: 'core-forms.wizard-started',

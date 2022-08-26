@@ -53,8 +53,8 @@ const FormElementValidationMixin = {
             if (this.field.validator.maxSize) {
                 this.addValidationRule("maxSize", CoreFormsValidationRules.STRING_MAX, {length: this.field.validator.maxSize});
             }
-            if (this.field.validator.regexpValidator) {
-                this.addValidationRule("regexpValidator", CoreFormsValidationRules.REGEX, new RegExp(this.field.validator.regexpValidator));
+            if (this.field.validator.regexp) {
+                this.addValidationRule("regexp", CoreFormsValidationRules.REGEX, new RegExp(this.field.validator.regexp));
             }
         },
         addNumberBasedValidationRules() {

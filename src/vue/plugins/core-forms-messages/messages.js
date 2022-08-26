@@ -17,6 +17,6 @@ const CoreFormsDefaultMessages = {
     errorPageText:      'Unable to load form definition. Please try again later',
     errorPageButton:    'Try again',
     errorGlobal:        'Something went wrong.',
-};
+}
 
-export default CoreFormsDefaultMessages;
+export default CoreFormsDefaultMessages

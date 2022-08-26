@@ -39,30 +39,30 @@ const CoreFormsDatePickerFieldPlugin = {
     install(_vueInstance) {
 
         //init luxon
-        let locale = document.getElementsByTagName("html")[0].getAttribute("lang");
+        let locale = document.getElementsByTagName("html")[0].getAttribute("lang")
         if (locale) {
-            LuxonSettings.defaultLocale = locale;
+            LuxonSettings.defaultLocale = locale
         }
 
         //register new validation rules for the added form element
-        CoreFormsValidationPlugin.addRule(DatePickerPluginConstants.VALIDATION_RULE_MIN, MinDateIsoStringValidator, "Min date validation failed for field {_field_}.");
-        CoreFormsValidationPlugin.addRule(DatePickerPluginConstants.VALIDATION_RULE_MAX, MaxDateIsoStringValidator, "Min date validation failed for field {_field_}.");
+        CoreFormsValidationPlugin.addRule(DatePickerPluginConstants.VALIDATION_RULE_MIN, MinDateIsoStringValidator, "Min date validation failed for field {_field_}.")
+        CoreFormsValidationPlugin.addRule(DatePickerPluginConstants.VALIDATION_RULE_MAX, MaxDateIsoStringValidator, "Min date validation failed for field {_field_}.")
 
         //register the new form field and all required dependencies
-        CoreFormsPlugin.registerFormField(_vueInstance, 'DateField', DateFieldForm);
-        CoreFormsPlugin.registerSummaryField(_vueInstance, 'SummaryDateField', DateFieldSummary);
+        CoreFormsPlugin.registerFormField(_vueInstance, 'DateField', DateFieldForm)
+        CoreFormsPlugin.registerSummaryField(_vueInstance, 'SummaryDateField', DateFieldSummary)
 
-        _vueInstance.component('vue-datetime-picker', DateTimePicker);
+        _vueInstance.component('vue-datetime-picker', DateTimePicker)
 
     },
     config(configData) {
         if (configData.locale && LuxonSettings.defaultLocale !== configData.locale) {
-            LuxonSettings.defaultLocale = configData.locale;
+            LuxonSettings.defaultLocale = configData.locale
         }
     }
 };
 
 
-export default CoreFormsDatePickerFieldPlugin;
+export default CoreFormsDatePickerFieldPlugin
 
 

@@ -7,6 +7,8 @@ $core-forms-back-color:       #ffffff !default;
 $core-forms-spinner-size:           32px !default;
 $core-forms-required-asterisk-char: '*' !default;
 
+$core-forms-wizard-margin:          25px !default;
+
 @import 'mixins/column-offset';
 
 @import 'invalid-state';

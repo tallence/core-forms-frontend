@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import {mapGetters} from "vuex";
+    import {mapGetters} from "vuex"
 
     export default {
         props: {
@@ -21,7 +21,7 @@
             'displayProgress': {required: false, default: false}
         },
         computed: {
-            ...mapGetters('core', ['formSubmitProgress'])
+            ...mapGetters('coreForms', ['formSubmitProgress'])
         }
-    };
+    }
 </script>

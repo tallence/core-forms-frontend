@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import FormElementVisibilityMixin from "./mixins/FormElementVisibilityMixin";
+  import FormElementVisibilityMixin from "./mixins/FormElementVisibilityMixin"
 
   export default {
     mixins: [FormElementVisibilityMixin],
@@ -54,7 +54,7 @@
        * @returns {Object}
        */
       containerCssClasses(classesObject) {
-        let validationClasses = classesObject || {};
+        let validationClasses = classesObject || {}
         if (this.$refs.provider != null) {
           validationClasses = this.$refs.provider.classes
         }
@@ -62,11 +62,11 @@
           'core-forms__field-with-hint': this.field.hint && !this.hideHint
         };
         containerClasses[`core-forms__field-${this.field.type.toLowerCase()}`] = true;
-        return {...containerClasses, ...validationClasses};
+        return {...containerClasses, ...validationClasses}
       },
       resetValidation() {
         if (this.$refs.provider) {
-          this.$refs.provider.reset();
+          this.$refs.provider.reset()
         }
       }
     },

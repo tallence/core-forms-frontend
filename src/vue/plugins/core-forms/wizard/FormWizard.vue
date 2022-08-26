@@ -24,7 +24,7 @@
                  aria-current="page"
                  :aria-disabled="(pageIndex >= activePageIndex)"
                  href="#"
-                 @click="goToFormPage(pageIndex)">{{formPage.title || (pageIndex+1)}}</a>
+                 @click="goToFormPage(pageIndex)">{{ formPage.title || (pageIndex + 1) }}</a>
             </li>
           </ul>
         </div>
@@ -43,24 +43,19 @@
         <div class="core-forms__wizard--footer">
 
           <div class="row">
-            <div class="col-xs-12 col-md-6" >
+            <div class="col-xs-12 col-md-6">
 
-              <!-- recaptcha is only required on the last page -->
-              <vue-recaptcha v-if="recaptchaKey && !hasNextFormPage"
-                             :sitekey="recaptchaKey"
-                             ref="recaptcha"
-                             size="invisible"
-                             @verify="finalizeSubmit"
-                             @expired="onCaptchaExpired"
-                             :loadRecaptchaScript="true">
-              </vue-recaptcha>
+              <!-- this is a dummy spam protection element, only show on the last page -->
+              <core-forms-spam-protection v-if="!hasNextFormPage"
+                                          @onValidated="finalizeSubmit"
+                                          ref="spamProtection"></core-forms-spam-protection>
 
               <button type="button"
                       v-if="hasPrevFormPage"
                       :disabled="!hasPrevFormPage || isFormSubmitting"
                       @click="goToPreviousFormPage"
                       class="btn btn-text core-forms__prev">
-                {{  'prevPageButton'|formsMessage }}
+                {{ 'prevPageButton'|formsMessage }}
               </button>
 
               <button type="submit"
@@ -87,15 +82,12 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
-import {CoreFormsEvents, CoreFormsEventSender} from "../index";
-import {EventSender} from "../common/events";
+import {mapActions, mapGetters} from "vuex"
+import {CoreFormsEvents, CoreFormsEventSender} from "../index"
 
 export default {
   name: 'FormWizard',
   replace: true,
-  // made available during app initialization via provide() { ... }
-  inject: ['recaptchaKey'],
   computed: {
     ...mapGetters('coreForms', ['activePageIndex', 'formPages', 'isFormSubmitting', 'hasNextFormPage', 'hasPrevFormPage'])
   },
@@ -106,46 +98,22 @@ export default {
   },
   methods: {
 
-    hasFieldErrorMessages(errors) {
-      return Object.values(errors).filter(f => f.length !== 0).length
-    },
-    onCaptchaExpired() {
-      if (this.$refs.recaptcha) {
-        this.$refs.recaptcha.reset()
-      }
-    },
-    resetValidation() {
-      if (this.$refs.observer) this.$refs.observer.reset()
-    },
+    /************************************ VALIDATION *******************************/
+
     async validate() {
       const isValid = await this.$refs.observer.validate()
       if (!isValid) {
         CoreFormsEventSender.send(CoreFormsEvents.VALIDATION_FAILED);
         return;
       }
-      if (this.$refs.recaptcha) {
-        this.$refs.recaptcha.execute()
-      } else {
-        //skip recaptcha if no sitekey is present
-        await this.navigateToNextPage()
-      }
+      this.$refs.spamProtection.execute();
     },
-    async saveInputData() {
-      await this.saveInputAsFormData(new FormData(this.$refs.form));
+    hasFieldErrorMessages(errors) {
+      return Object.values(errors).filter(f => f.length !== 0).length
     },
-    async finalizeSubmit() {
-      await this.saveInputData();
-      this.$emit('submit');
-      CoreFormsEventSender.send(CoreFormsEvents.WIZARD_COMPLETED)
-    },
-    onSubmitError() {
-      if (error == null || (error['globalError'] == null && error['fieldErrors'] == null)) {
-        this.errorMessage = this.getFormsMessage('errorGlobal')
-      } else {
-        this.errorMessage = error['globalError'] || null
-        this.$refs.observer.setErrors(error['fieldErrors'] || {})
-      }
-      this.onCaptchaExpired()
+    resetValidation() {
+      this.$refs.observer?.reset();
+      this.$refs.spamProtection?.reset();
     },
 
     /************************************ WIZARD *******************************/
@@ -169,7 +137,30 @@ export default {
       } else {
         await this.finalizeSubmit()
       }
-    }
+    },
+
+    /************************************ SUBMIT *******************************/
+
+    async saveInputData() {
+      await this.saveInputAsFormData(new FormData(this.$refs.form))
+    },
+
+    async finalizeSubmit() {
+      await this.saveInputData();
+      this.$emit('submit');
+      CoreFormsEventSender.send(CoreFormsEvents.WIZARD_COMPLETED)
+    },
+
+    onSubmitError() {
+      if (error == null || (error['globalError'] == null && error['fieldErrors'] == null)) {
+        this.errorMessage = this.getFormsMessage('errorGlobal')
+      } else {
+        this.errorMessage = error['globalError'] || null
+        this.$refs.observer.setErrors(error['fieldErrors'] || {})
+      }
+      this.$refs.spamProtection.reset();
+    },
+
 
   },
   mounted() {

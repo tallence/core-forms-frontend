@@ -1,0 +1,17 @@
+.core-forms__wizard {
+  &--head {
+    margin-bottom: $core-forms-wizard-margin;
+  }
+
+  &--step {
+
+  }
+
+  &--summary {
+    margin-bottom: $core-forms-wizard-margin;
+  }
+
+  &--footer {
+    margin-top: $core-forms-wizard-margin;
+  }
+}

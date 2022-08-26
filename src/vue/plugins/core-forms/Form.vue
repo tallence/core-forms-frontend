@@ -38,15 +38,9 @@
 <script>
 import {mapActions, mapGetters} from "vuex"
 import {CoreFormsEvents, CoreFormsEventSender, CoreFormsUtils} from "./index"
-import FormWizard from "./wizard/FormWizard"
-import FormWizardStep from "./wizard/FormWizardStep"
-import FormSummary from "./FormSummary"
-import FormFields from "./FormFields"
-import {CoreFormsConstants} from "./common/util";
 
 export default {
   name: 'FormPage',
-  components: {FormFields, FormSummary, FormWizardStep, FormWizard},
   replace: true,
 
   // made available during app initialization via provide() { ... }
@@ -65,7 +59,7 @@ export default {
     ...mapActions('coreForms', ['loadForm', 'submitForm']),
     async onLoadForm() {
       try {
-        await this.loadForm(this.formUrl);
+        await this.loadForm(this.formUrl)
         this.$nextTick(() => {
 
         })
@@ -75,7 +69,7 @@ export default {
     },
     async onSubmitForm() {
       try {
-        let result = this.submitForm();
+        let result = await this.submitForm();
         if (result) {
           this.$addFormsMessage({
             successPageTitle: result['textHeader'],
@@ -91,9 +85,9 @@ export default {
   },
 
   mounted() {
-    CoreFormsEventSender.init(this.$root);
-    CoreFormsEventSender.send(CoreFormsEvents.APPLICATION_LOADED);
-    this.onLoadForm();
+    CoreFormsEventSender.init(this.$root)
+    CoreFormsEventSender.send(CoreFormsEvents.APPLICATION_LOADED)
+    this.onLoadForm()
   }
 }
 </script>

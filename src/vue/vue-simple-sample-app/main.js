@@ -20,6 +20,7 @@ import VueSimpleSampleApp from "./App";
 import CoreFormsPlugin from "../plugins/core-forms";
 import CoreFormsMessagesPlugin from "../plugins/core-forms-messages";
 import CoreFormsDatePickerFieldPlugin from "../shared/date-picker-plugin";
+import CoreFormsRecaptchaPlugin from "../shared/recaptcha-plugin";
 
 /*
  this will register the main core forms plugin providing the rendering and validation of the field.
@@ -36,6 +37,7 @@ Vue.use(CoreFormsPlugin, {store});
  remove the following line to completely disable the datepicker field. disable it as valid form field for the studio editor as well.
  */
 Vue.use(CoreFormsDatePickerFieldPlugin);
+
 
 export default {
   /**
@@ -54,11 +56,18 @@ export default {
     */
     await CoreFormsMessagesPlugin.config(texts);
 
+    /**
+     * init the recaptcha plugin
+     */
+    if (data.recaptchaKey != null) {
+      Vue.use(CoreFormsRecaptchaPlugin);
+    }
+
     /*
     when you decided to use the DatePickerPlugin, then you can overwrite the default locale for the date picker.
     (defaults to the lang attribute of the page)
     */
-    CoreFormsDatePickerFieldPlugin.config({locale: 'de'});
+    //CoreFormsDatePickerFieldPlugin.config({locale: 'de'});
 
     return new Vue({
       store,

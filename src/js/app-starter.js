@@ -95,6 +95,15 @@ export default class CoreFormsApplication {
             case CoreFormsEvents.WIZARD_COMPLETED:
               console.log('CoreForms: wizard completed');
               break;
+            case CoreFormsEvents.VALIDATION_FAILED:
+              console.log('CoreForms: validation failed');
+              break;
+            case CoreFormsEvents.SPAM_PROTECT_SUCCESS:
+              console.log('CoreForms: spam protection passed');
+              break;
+            case CoreFormsEvents.SPAM_PROTECT_FAILED:
+              console.log('CoreForms: spam protection failed');
+              break;
             default:
           }
         }
