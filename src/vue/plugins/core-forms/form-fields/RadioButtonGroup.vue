@@ -30,8 +30,10 @@
             'radio-button': RadioButton
         },
         beforeMount() {
-            const defaultOptions = this.field.options.filter(o => o['selectedByDefault']);
-            this.field.value = (defaultOptions.length) ? defaultOptions[0]['id'] : null;
+            if (this.field.value == null) {
+              const defaultOptions = this.field.options.filter(o => o['selectedByDefault']);
+              this.field.value = (defaultOptions.length) ? defaultOptions[0]['id'] : null;
+            }
             this.addRequiredValidationRule();
         }
     }

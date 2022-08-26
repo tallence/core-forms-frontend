@@ -7,7 +7,7 @@ import {
   FORM_SOURCE,
   FORM_SUBMITTING,
   RESET_FORM_VALUES,
-  RESET_PAGE,
+  RESET_PAGE, SET_FORM_DATA_FOR_PAGE,
   SET_FORM_VALUE,
   SET_NEXT_PAGE,
   SET_PAGE,
@@ -65,6 +65,10 @@ export const loadForm = ({commit}, loadUrl) => {
     });
 }
 
+export const saveInputAsFormData = ({commit}, formData) => {
+  commit(SET_FORM_DATA_FOR_PAGE, formData)
+}
+
 /**
  * Main method to submit the form data
  *
@@ -72,7 +76,7 @@ export const loadForm = ({commit}, loadUrl) => {
  * @param getters
  * @param submitData
  */
-export const submitForm = ({commit, getters}, submitData) => {
+export const submitForm = ({commit, getters}) => {
   return new Promise((resolve, reject) => {
     EventSender.send(EventConstants.FORM_SUBMIT);
     commit(FORM_SUBMITTING, true);
@@ -84,7 +88,7 @@ export const submitForm = ({commit, getters}, submitData) => {
       commit(FORM_SUBMITTING, false);
       return;
     }
-    Vue.http.post(url, submitData, {
+    Vue.http.post(url, getters.getSubmitFormData, {
       progress(e) {
         if (e.lengthComputable) {
           commit(FORM_PROGRESS, Math.round(e.loaded / (e.total || 1) * 100));
@@ -112,7 +116,7 @@ export const setFormValue = ({commit}, data = {}) => {
     commit(SET_FORM_VALUE, data);
 }
 
-export const goToPreviousFormPage = ({commit}) => {
+export const goToPreviousFormPage = ({commit, state}) => {
   commit(SET_PREV_PAGE);
   EventSender.send(EventConstants.WIZARD_PREV_PAGE)
   EventSender.send(EventConstants.WIZARD_NAVIGATION, {data: state.activePageIndex});

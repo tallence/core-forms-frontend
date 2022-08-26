@@ -24,18 +24,9 @@
         <form-wizard-step v-for="(formPage, pageIndex) in formPages"
                           :key="formPage.id"
                           :page-index="pageIndex">
-          <div class="row row-equal">
-            <div v-for="field in formPage.formElements"
-                 :key="field.id"
-                 :class="field.advancedSettings|columnClass">
-              <transition name="core-forms__app__transition-fade" mode="out-in">
-                <component v-if="isFieldSupported(field.type)"
-                           :is="field.type"
-                           :field="field"
-                           :data-field-type="field.type"/>
-              </transition>
-            </div>
-          </div>
+
+          <form-summary v-if="formPage.isSummaryPage" :form-page="formPage"></form-summary>
+          <form-fields v-if="formPage.formElements" :form-page="formPage"></form-fields>
         </form-wizard-step>
       </form-wizard>
 
@@ -45,14 +36,17 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-import {CoreFormsEvents, CoreFormsEventSender, CoreFormsUtils} from "./index";
-import FormWizard from "./FormWizard";
-import FormWizardStep from "./FormWizardStep";
+import {mapActions, mapGetters} from "vuex"
+import {CoreFormsEvents, CoreFormsEventSender, CoreFormsUtils} from "./index"
+import FormWizard from "./wizard/FormWizard"
+import FormWizardStep from "./wizard/FormWizardStep"
+import FormSummary from "./FormSummary"
+import FormFields from "./FormFields"
+import {CoreFormsConstants} from "./common/util";
 
 export default {
   name: 'FormPage',
-  components: {FormWizardStep, FormWizard},
+  components: {FormFields, FormSummary, FormWizardStep, FormWizard},
   replace: true,
 
   // made available during app initialization via provide() { ... }
@@ -61,40 +55,37 @@ export default {
   computed: {
     ...mapGetters('coreForms', ['isFormLoading', 'isFormSubmitting', 'formValues', 'formPages', 'allFormFields']),
     formIntroText() {
-      return this.$store.getters['coreForms/getFormProperty']("introText");
+      return this.$store.getters['coreForms/getFormProperty']("introText")
     },
     hasFileUploads() {
-      return this.allFormFields && this.allFormFields.filter(e => e.type === 'FileUpload' && e.value != null).length;
+      return this.allFormFields && this.allFormFields.filter(e => e.type === 'FileUpload' && e.value != null).length
     }
   },
   methods: {
-    isFieldSupported(type) {
-      return CoreFormsUtils.isFormFieldTypeSupported(type)
-    },
+    ...mapActions('coreForms', ['loadForm', 'submitForm']),
     async onLoadForm() {
       try {
-        console.log('load form')
-        await this.$store.dispatch('coreForms/loadForm', this.formUrl);
+        await this.loadForm(this.formUrl);
         this.$nextTick(() => {
 
         })
       } catch (err) {
-        this.$emit('onFormError', err);
+        this.$emit('onFormError', err)
       }
     },
-    async onSubmitForm(dataToSubmit) {
+    async onSubmitForm() {
       try {
-        let result = await this.$store.dispatch('coreForms/submitForm', dataToSubmit);
+        let result = this.submitForm();
         if (result) {
           this.$addFormsMessage({
             successPageTitle: result['textHeader'],
             successPageText: result['textMessage'],
             successPageButton: result['textButton']
-          });
+          })
         }
-        this.$emit('onFormSuccess');
+        this.$emit('onFormSuccess')
       } catch (error) {
-        this.$refs.wizard.onSubmitError(error);
+        this.$refs.wizard.onSubmitError(error)
       }
     }
   },

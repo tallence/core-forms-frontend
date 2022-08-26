@@ -1,5 +1,5 @@
 /* own plugin dependencies */
-import DateFieldVueComponent from "./DateField";
+import DateFieldForm from "./DateFieldForm";
 import {DatePickerPluginConstants, MaxDateIsoStringValidator, MinDateIsoStringValidator} from "./imports";
 
 /* dependencies from core and validation plugin */
@@ -9,6 +9,7 @@ import CoreFormsValidationPlugin from "../../plugins/core-forms-validation";
 /* 3rd party dependencies */
 import {Settings as LuxonSettings} from 'luxon'
 import {Datetime as DateTimePicker} from 'vue-datetime';
+import DateFieldSummary from "./DateFieldSummary";
 
 /**
  * This is a simple example how additional fields can be integrated into the core forms app.
@@ -48,7 +49,9 @@ const CoreFormsDatePickerFieldPlugin = {
         CoreFormsValidationPlugin.addRule(DatePickerPluginConstants.VALIDATION_RULE_MAX, MaxDateIsoStringValidator, "Min date validation failed for field {_field_}.");
 
         //register the new form field and all required dependencies
-        CoreFormsPlugin.registerFormField(_vueInstance, 'DateField', DateFieldVueComponent);
+        CoreFormsPlugin.registerFormField(_vueInstance, 'DateField', DateFieldForm);
+        CoreFormsPlugin.registerSummaryField(_vueInstance, 'SummaryDateField', DateFieldSummary);
+
         _vueInstance.component('vue-datetime-picker', DateTimePicker);
 
     },

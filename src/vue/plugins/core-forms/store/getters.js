@@ -47,7 +47,6 @@ export const activePageData = (state, getters) => {
   let page = getters.formPage(state.activePageIndex);
 
   if (page) {
-      console.log('active Page Data', page);
       return {
         id: page.id,
         title: page.title,
@@ -70,6 +69,9 @@ export const formPages = (state) => {
   return (state.formDefinition != null) ? state.formDefinition[CoreFormsConstants.FORM_PAGES] || [] : []
 };
 
+export const previousFormPages = (state, getters) => {
+  return getters.formPages.slice(0, state.activePageIndex);
+};
 
 export const hasNextFormPage = (state, getters) => {
   return state.activePageIndex < (getters.formPages.length - 1)
@@ -95,6 +97,16 @@ export const getFormValue = (state) => {
     return (fieldId) => {
         return state.formValues != null ? state.formValues[fieldId] : null
     }
+}
+
+export const getSubmitFormData = (state) => {
+  let submitData = new FormData();
+  Object.values(state.formSubmitData).forEach(pageData => {
+    for (let entry of pageData.entries()) {
+      submitData.append(entry[0], entry[1]);
+    }
+  });
+  return submitData;
 }
 
 

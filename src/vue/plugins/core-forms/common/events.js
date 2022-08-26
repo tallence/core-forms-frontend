@@ -17,6 +17,8 @@ export const EventConstants = {
   //will be fired after the user clicked the button on the success page
   SUBMIT_CONFIRMED: 'core-forms.submit-confirmed',
 
+  VALIDATION_FAILED: 'core-forms.validation-failed',
+
   // those events will be fired when the form page changes
   WIZARD_STARTED: 'core-forms.wizard-started',
   WIZARD_NEXT_PAGE: 'core-forms.wizard-next',

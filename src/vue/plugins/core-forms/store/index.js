@@ -14,6 +14,8 @@ const state = {
   formDefinition: null,
   /* formValues */
   formValues: {},
+  /* saved data for the actual submit */
+  formSubmitData: {},
   /* active form page */
   activePageIndex: 0
 };
