@@ -10,8 +10,8 @@ import {
   SET_NEXT_PAGE,
   SET_PAGE,
   SET_PREV_PAGE
-} from "./types";
-import {CoreFormsConstants} from "../common/util";
+} from "./types"
+import {CoreFormsConstants} from "../common/util"
 
 export default {
   [FORM_SOURCE](state, newValue) {

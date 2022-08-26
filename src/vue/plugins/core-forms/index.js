@@ -28,7 +28,7 @@ const CoreFormsPlugin = {
       throw new Error("Please provide vuex store.")
     }
     store.registerModule('coreForms', coreFormsStore)
-    Vue.$coreFormsStore = coreFormsStore
+    Vue.prototype.$coreFormsStore = coreFormsStore
 
     Vue.use(CoreFormsMessagesPlugin)
     Vue.use(CoreFormsValidationPlugin)

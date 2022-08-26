@@ -1,10 +1,9 @@
 import {localize, ValidationObserver, ValidationProvider} from "vee-validate";
-import {max_value, min_value, numeric, regex, required, size} from "vee-validate/dist/rules";
+import {max_value, min_value, numeric, regex, required, size, email} from "vee-validate/dist/rules";
 
 import {configure, extend} from 'vee-validate';
 
 import {string_max, string_min} from "./rules/string";
-import {email} from "./rules/email";
 import {array_max, array_min, array_required} from "./rules/array";
 import {file_size_min} from "./rules/filesize";
 import CoreFormsValidationMessages from "./messages";

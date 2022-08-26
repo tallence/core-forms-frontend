@@ -28,7 +28,7 @@ Use this sample theme as starting point, convert it to a brick or include it as 
 The provided sample application has dependencies to the following projects:
 * [VueJS](https://github.com/vuejs/vue)
 * [Vuex](https://github.com/vuejs/vuex)
-* [VueResource](https://github.com/pagekit/vue-resource)
+* [axios](https://github.com/axios/axios)
 * [vee-validate](https://github.com/logaretm/vee-validate) for client side validation with error messages and highlighting
 * [Bootstrap 4](https://github.com/twbs/bootstrap) for markup and base styling
 * (_optional_) [vue-datetime](https://github.com/mariomka/vue-datetime) for adding a DatePicker component, also see section [Custom fields](#custom-fields)
