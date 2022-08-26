@@ -1,7 +1,7 @@
-import IBAN from "iban"
+const ibantools = require('ibantools');
 
 export const iban = {
   validate: (value) => {
-    return IBAN.isValid(value);
+    return ibantools.isValidIBAN(value.replace(/\s/g, ''));
   },
 };
