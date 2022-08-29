@@ -5,6 +5,7 @@ import {configure, extend} from 'vee-validate';
 
 import {string_max, string_min} from "./rules/string";
 import {email} from "./rules/email";
+import {iban} from "./rules/iban";
 import {array_max, array_min, array_required} from "./rules/array";
 import {file_size_min} from "./rules/filesize";
 import CoreFormsValidationMessages from "./messages";
@@ -24,6 +25,7 @@ export const CoreFormsValidationRules = {
   FILE_REQUIRED:  'file_required',
   FILE_SIZE_MIN:  'file_size_min',
   FILE_SIZE_MAX:  'file_size_max',
+  IBAN:           'iban'
 }
 
 const _VALIDATION_CONFIG = {
@@ -72,6 +74,7 @@ const CoreFormsValidationPlugin = {
     this.addRule(CoreFormsValidationRules.ARRAY_MAX, array_max);
     this.addRule(CoreFormsValidationRules.ARRAY_REQUIRED, array_required);
     this.addRule(CoreFormsValidationRules.FILE_SIZE_MIN, file_size_min);
+    this.addRule(CoreFormsValidationRules.IBAN, iban);
 
     //this initializes the default translation messages.
     localize({en: this._MESSAGES});
