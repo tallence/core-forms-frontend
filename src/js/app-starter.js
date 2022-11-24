@@ -35,6 +35,7 @@ export default class CoreFormsApplication {
             inputFileEmpty:     this.node.dataset['messagesInputFileEmpty'],
             inputFileRemove:    this.node.dataset['messagesInputFileRemove'],
             inputFileBrowse:    this.node.dataset['messagesInputFileBrowse'],
+            inputCopyMail:      this.node.dataset['messagesInputCopyMail'],
             inputMandatory:     this.node.dataset['messagesInputMandatory'],
             successPageTitle:   this.node.dataset['messagesSuccessPageTitle'],
             successPageText:    this.node.dataset['messagesSuccessPageText'],

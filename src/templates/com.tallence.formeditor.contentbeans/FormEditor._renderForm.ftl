@@ -23,6 +23,7 @@
      data-messages-input-file-empty="${cm.getMessage("com.tallence.forms.label.input.file.empty")}"
      data-messages-input-file-browse="${cm.getMessage("com.tallence.forms.label.input.file.browse")}"
      data-messages-input-option-default="${cm.getMessage("com.tallence.forms.label.input.option.default")}"
+     data-messages-input-copy-mail="${cm.getMessage("com.tallence.forms.label.input.mail.copy")}"
      data-messages-input-mandatory="${cm.getMessage("com.tallence.forms.label.input.mandatory")}"
      data-messages-input-close="${cm.getMessage("com.tallence.forms.label.input.close")}"
      data-messages-copy-mail="${cm.getMessage("com.tallence.forms.label.copy.mail")}"
