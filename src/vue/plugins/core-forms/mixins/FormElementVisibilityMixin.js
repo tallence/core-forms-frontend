@@ -43,7 +43,7 @@ const FormElementVisibilityMixin = {
         && fieldDefinition['advancedSettings']['visibility']
         && fieldDefinition['advancedSettings']['visibility']['activated'] === true) {
 
-        let targetValues = fieldDefinition['advancedSettings']['visibility']['values']
+        let targetValues = [fieldDefinition['advancedSettings']['visibility']['value']]
         let elementId = fieldDefinition['advancedSettings']['visibility']['elementId']
 
         /**
