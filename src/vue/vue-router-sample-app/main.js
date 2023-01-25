@@ -11,7 +11,9 @@ import base dependencies for the app
 import Vue from "vue";
 import VueRouterSampleApp from "./App";
 import router from './router';
-import store from './store';
+
+// this app doesn't require a Vuex store by itself, but the CoreFormsPlugin depends on it; you can use the base store from the core forms plugin
+import store from '../plugins/core-forms/store/base/store';
 
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
@@ -22,6 +24,7 @@ import core forms dependencies
 import CoreFormsPlugin from "../plugins/core-forms";
 import CoreFormsMessagesPlugin from "../plugins/core-forms-messages";
 import CoreFormsDatePickerFieldPlugin from "../shared/date-picker-plugin";
+import CoreFormsRecaptchaPlugin from "../shared/recaptcha-plugin";
 
 /*
  this will register the main core forms plugin providing the rendering and validation of the field.
@@ -53,15 +56,16 @@ export default {
     console.log('starting vue router sample app with data', {data, texts});
 
     /*
-     this call simply stores initial data for the application itself,
-     you can pass the data to the app in other ways as well
-     */
-    await store.dispatch('setAppData', data);
-
-    /*
     init and config the core forms message plugin; store texts and translations
      */
-    await CoreFormsMessagesPlugin.config(texts);
+    await CoreFormsMessagesPlugin.config(texts)
+
+    /**
+     * init the recaptcha plugin
+     */
+    if (data.recaptchaKey != null) {
+      Vue.use(CoreFormsRecaptchaPlugin);
+    }
 
     /*
     when you decided to use the DatePickerPlugin, then you can overwrite the default locale for the date picker.
@@ -69,10 +73,12 @@ export default {
     */
     //CoreFormsDatePickerFieldPlugin.config({locale: 'de'});
 
-    return new Vue({
+
+    let app = new Vue({
       router,
       store,
-      render: h => h(VueRouterSampleApp)
-    }).$mount(selector);
+      render: h => h(VueRouterSampleApp),
+      provide: () => { return { ...data }}
+    }).$mount(selector)
   }
 }

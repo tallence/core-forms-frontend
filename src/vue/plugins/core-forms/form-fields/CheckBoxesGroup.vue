@@ -26,7 +26,9 @@
         },
         beforeMount() {
             this.field.value = this.field.value || [];
-            this.field.value = this.field.options.filter(o => o['selectedByDefault']).map(o => o.id);
+            if (this.field.value == null || this.field.value.length === 0) {
+              this.field.value = this.field.options.filter(o => o['selectedByDefault']).map(o => o.id);
+            }
             this.addArrayBasedValidationRules();
         }
     }

@@ -11,12 +11,12 @@ const CoreFormsMessagesPlugin = {
     let self = this;
 
     Vue.prototype.$addFormsMessages = function (messages) {
-      self._addMessages(messages);
+      self._addMessages(messages)
     }
     Vue.prototype.$addFormsMessage = function (key, value) {
       let newMessage = {};
       newMessage[key] = value;
-      self._addMessages(newMessage);
+      self._addMessages(newMessage)
     }
 
     Vue.prototype.$getFormsMessage = function (key) {
@@ -30,14 +30,14 @@ const CoreFormsMessagesPlugin = {
           return self._MESSAGES[key] || key
         },
         hasFormsMessage(key) {
-          return (self._MESSAGES[key] != null);
+          return (self._MESSAGES[key] != null)
         }
       }
     });
 
     //adding optional filter for easier usage in templates
     Vue.filter('formsMessage', function (value) {
-      return self._MESSAGES[value] || value;
+      return self._MESSAGES[value] || value
     });
   },
   /**
@@ -46,12 +46,12 @@ const CoreFormsMessagesPlugin = {
    * @param data
    */
   config(data = CoreFormsDefaultMessages) {
-    this._addMessages(data);
+    this._addMessages(data)
   },
   _addMessages(messages) {
-    this._MESSAGES = {...this._MESSAGES, ...messages};
+    this._MESSAGES = {...this._MESSAGES, ...messages}
   }
-};
+}
 
 export default CoreFormsMessagesPlugin;
 

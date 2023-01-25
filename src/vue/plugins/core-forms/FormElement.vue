@@ -18,7 +18,10 @@
       </label>
 
       <slot :validator="{valid, classes, invalid, validated}">
-        <!-- form field markup will be placed here -->
+        <!-- primary slot: form field markup will be placed here -->
+      </slot>
+      <slot name="secondary">
+        <!-- additional slot? -->
       </slot>
 
       <form-element-hint v-if="field.hint && !hideHint" :text="field.hint"/>
@@ -31,32 +34,17 @@
 </template>
 
 <script>
-  import {isFormFieldTypeSupported} from "./common/util";
+  import FormElementVisibilityMixin from "./mixins/FormElementVisibilityMixin"
 
   export default {
+    mixins: [FormElementVisibilityMixin],
     props: {
       'form': {type: String, required: true},
-      'field': {type: Object, required: true},
       'validationRules': {type: Object, required: true},
       'hideMainLabel': {required: false, default: false},
       'hideHint': {required: false, default: false},
       'parentClass': {required: false, default: null, type: String},
       'labelClass': {required: false, default: null, type: String}
-    },
-
-    computed: {
-      isRendered() {
-        if (!this.field || !isFormFieldTypeSupported(this.field.type)) {
-          return false;
-        }
-        let advanced = this.field.advancedSettings;
-        if (advanced && advanced.visibility && advanced.visibility.activated === true) {
-          let relatedFieldValue = this.$store.getters["coreForms/getFormValue"](advanced.visibility.elementId);
-          let targetValue = advanced.visibility.value;
-          return Array.isArray(relatedFieldValue) ? relatedFieldValue.indexOf(targetValue) !== -1 : relatedFieldValue === targetValue;
-        }
-        return true;
-      }
     },
     methods: {
       /**
@@ -66,7 +54,7 @@
        * @returns {Object}
        */
       containerCssClasses(classesObject) {
-        let validationClasses = classesObject || {};
+        let validationClasses = classesObject || {}
         if (this.$refs.provider != null) {
           validationClasses = this.$refs.provider.classes
         }
@@ -74,11 +62,11 @@
           'core-forms__field-with-hint': this.field.hint && !this.hideHint
         };
         containerClasses[`core-forms__field-${this.field.type.toLowerCase()}`] = true;
-        return {...containerClasses, ...validationClasses};
+        return {...containerClasses, ...validationClasses}
       },
       resetValidation() {
         if (this.$refs.provider) {
-          this.$refs.provider.reset();
+          this.$refs.provider.reset()
         }
       }
     },

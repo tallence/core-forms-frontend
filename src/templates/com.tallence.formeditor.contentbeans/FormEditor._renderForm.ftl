@@ -29,6 +29,8 @@
      data-messages-copy-mail="${cm.getMessage("com.tallence.forms.label.copy.mail")}"
 
      data-messages-submit-button="${cm.getMessage("com.tallence.forms.label.submit.button")}"
+     data-messages-prev-page-button="${cm.getMessage("com.tallence.forms.label.prevpage.button")}"
+     data-messages-next-page-button="${cm.getMessage("com.tallence.forms.label.nextpage.button")}"
      data-messages-submit-active="${cm.getMessage("com.tallence.forms.label.submit.active")}"
 
      data-messages-success-page-title="${cm.getMessage("com.tallence.forms.label.success.page.title")}"

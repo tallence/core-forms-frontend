@@ -3,10 +3,7 @@
 This is an example for the frontend part of the [Core-Forms](https://github.com/tallence/core-forms) repository.
 It contains a sample theme with minimal templates, Studio preview, required styles and Javascript files for the CoreMedia Frontend-Development Workspace.
 
-Tested with ``cmcc-10-1907``, ``cmcc-10-2004`` and ``cmcc-10-2010``.
-
-
-
+Tested with ``cmcc-10-1907``, ``cmcc-10-2004``, ``cmcc-10-2010`` and ``cmcc-11-2207``.
 
 ## Installation & Build
 
@@ -23,6 +20,7 @@ The sample theme has dependencies to the following CoreMedia frontend modules:
 * ``@coremedia/brick-page``
 * ``@coremedia/brick-preview``
 
+Use this sample theme as starting point, convert it to a brick or include it as it is into your existing theme via [Theme inheritance](https://documentation.coremedia.com/cmcc-11/current/webhelp/frontend-en/content/ThemeInheritance.html).
 
 
 ## VueJS Application
@@ -30,7 +28,7 @@ The sample theme has dependencies to the following CoreMedia frontend modules:
 The provided sample application has dependencies to the following projects:
 * [VueJS](https://github.com/vuejs/vue)
 * [Vuex](https://github.com/vuejs/vuex)
-* [VueResource](https://github.com/pagekit/vue-resource)
+* [axios](https://github.com/axios/axios)
 * [vee-validate](https://github.com/logaretm/vee-validate) for client side validation with error messages and highlighting
 * [Bootstrap 4](https://github.com/twbs/bootstrap) for markup and base styling
 * (_optional_) [vue-datetime](https://github.com/mariomka/vue-datetime) for adding a DatePicker component, also see section [Custom fields](#custom-fields)

@@ -12,8 +12,6 @@
     </div>
 
     <core-forms v-if="!isSuccess && !isError"
-                :recaptcha="recaptchaKey"
-                :load-url="formUrl"
                 @onFormError="isError = true"
                 @onFormSuccess="isSuccess = true"/>
   </div>
@@ -22,7 +20,6 @@
 <script>
   export default {
     name: 'CoreFormsSimpleSampleApp',
-    props: ['formUrl', 'recaptchaKey'],
     data() {
       return {
         isError: false,

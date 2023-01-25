@@ -1,6 +1,6 @@
-import * as getters from './getters';
-import * as actions from './actions';
-import mutations from './mutations';
+import * as getters from './getters'
+import * as actions from './actions'
+import mutations from './mutations'
 
 const state = {
   formSource: undefined,
@@ -13,8 +13,12 @@ const state = {
   /* raw form definition */
   formDefinition: null,
   /* formValues */
-  formValues: {}
-};
+  formValues: {},
+  /* saved data for the actual submit */
+  formSubmitData: {},
+  /* active form page */
+  activePageIndex: 0
+}
 
 export default {
     namespaced: true,
@@ -22,4 +26,4 @@ export default {
     getters,
     actions,
     mutations
-};
+}
