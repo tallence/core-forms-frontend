@@ -1,0 +1,44 @@
+.dp__input_wrap {
+  position: relative;
+  width: 100%;
+  box-sizing: unset;
+}
+
+.dp__input_reg {
+  caret-color: transparent;
+}
+
+.dp__input_icons {
+  display: inline-block;
+  width: $dp__font_size;
+  height: $dp__font_size;
+  stroke-width: 0;
+  font-size: $dp__font_size;
+  line-height: $dp__font_size * 1.5;
+  padding: 6px 12px;
+  color: var(--dp-icon-color);
+  box-sizing: content-box;
+}
+
+.dp__input_icon {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  color: var(--dp-icon-color);
+}
+
+.dp__clear_icon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--dp-icon-color);
+}
+
+.dp__input_icon_pad {
+  padding-left: $dp__input_icon_padding;
+}
+

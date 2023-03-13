@@ -1,6 +1,6 @@
 <template>
-    <form-element-wrapper :validation-rules="validatorRules"
-                          :field="field">
+  <form-element :validation-rules="validatorRules"
+                :form-field="field">
         <textarea class="form-control"
                   type="text"
                   :id="field.id"
@@ -11,16 +11,16 @@
                   v-model.trim="field.value"
                   ref="textarea"
                   :required="field.validator.mandatory"/>
-    </form-element-wrapper>
+  </form-element>
 </template>
 
 <script>
-    import FormElementValidationMixin from "../mixins/FormElementValidationMixin";
+import FormElementValidationMixin from "../mixins/FormElementValidationMixin"
 
-    export default {
-        mixins: [FormElementValidationMixin],
-        beforeMount() {
-            this.addStringBasedValidationRules();
-        }
-    }
+export default {
+  mixins: [FormElementValidationMixin],
+  beforeMount() {
+    this.addStringBasedValidationRules()
+  }
+}
 </script>

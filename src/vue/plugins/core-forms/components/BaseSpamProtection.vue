@@ -2,7 +2,9 @@
 import {CoreFormsEvents, CoreFormsEventSender} from "../index";
 
 export default {
+  template: '<span />', //not really required
   methods: {
+
     /* those methods should be overwritten */
 
     execute() {

@@ -4,14 +4,13 @@
             <transition-group name="core-forms-app__transition-fade" tag="ul" class="core-forms__errors__list">
                 <li class="core-forms__errors__list-item"
                     :key="name"
-                    v-for="(error, name, index) in errors"
-                    v-if="error.length">
-                    <span class="core-forms__errors__text" :data-error-field="name">{{ error[0] }}</span>
+                    v-for="(error, name, index) in errors">
+                    <span class="core-forms__errors__text" :data-error-field="name">{{ error }}</span>
                 </li>
             </transition-group>
             <button type="button" class="core-forms__errors__close close"
                     data-dismiss="alert"
-                    :aria-label="'inputClose'|formsMessage" :title="'inputClose'|formsMessage"
+                    :aria-label="$translateMessage('inputClose')" :title="$translateMessage('inputClose')"
                     v-if="canDismiss" @click="dismiss">
                 <span aria-hidden="true">&times;</span>
             </button>

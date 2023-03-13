@@ -4,22 +4,22 @@
  * @type {{computesRequired: boolean, params: [{cast: function(*=): number, name: string}, {name: string}], validate: (function(*, *): *|boolean|boolean)}}
  */
 export const array_min = {
-    validate: function (arr, _a) {
-        let minSize = _a.min;
-        let emptyAllowed = _a.allowEmpty || false;
+  validate: function (arr, _a) {
+    let minSize = _a.min
+    let emptyAllowed = _a.allowEmpty || false
 
-        return (emptyAllowed && !arr.length) || (arr != null && arr.length >= minSize);
-    },
-    computesRequired: true,
-    params: [
-        {
-            name: 'min',
-            cast: function (value) {
-                return Number(value);
-            }
-        }, {name: 'allowEmpty'}
-    ]
-};
+    return (emptyAllowed && !arr.length) || (arr != null && arr.length >= minSize)
+  },
+  computesRequired: true,
+  params: [
+    {
+      name: 'min',
+      cast: function (value) {
+        return Number(value)
+      }
+    }, {name: 'allowEmpty'}
+  ]
+}
 
 /**
  * Validator for array values with a max size restrictions
@@ -27,20 +27,20 @@ export const array_min = {
  * @type {{computesRequired: boolean, params: [{cast: function(*=): number, name: string}, {name: string}], validate: (function(*, *): *|boolean|boolean)}}
  */
 export const array_max = {
-    validate: function (arr, _a) {
-        let maxSize = _a.max;
-        let emptyAllowed = _a.allowEmpty || false;
-        return (emptyAllowed && !arr.length) || (arr != null && arr.length <= maxSize);
-    },
-    computesRequired: true,
-    params: [
-        {
-            name: 'max',
-            cast: function (value) {
-                return Number(value);
-            }
-        }, {name: 'allowEmpty'}
-    ]
+  validate: function (arr, _a) {
+    let maxSize = _a.max
+    let emptyAllowed = _a.allowEmpty || false
+    return (emptyAllowed && !arr.length) || (arr != null && arr.length <= maxSize)
+  },
+  computesRequired: true,
+  params: [
+    {
+      name: 'max',
+      cast: function (value) {
+        return Number(value)
+      }
+    }, {name: 'allowEmpty'}
+  ]
 }
 
 /**
@@ -50,9 +50,9 @@ export const array_max = {
  * @type {{computesRequired: boolean, params: [], validate: (function(*): boolean|*)}}
  */
 export const array_required = {
-    validate: function (arr) {
-        return (arr != null && arr.length);
-    },
-    computesRequired: true,
-    params: []
-};
+  validate: function (arr) {
+    return (arr != null && arr.length)
+  },
+  computesRequired: true,
+  params: []
+}

@@ -1,14 +1,13 @@
-import {max, min} from "vee-validate/dist/rules";
-import {stringCorrection} from "../utils";
+import {min, max} from '@vee-validate/rules';
 
 const PARAMS = [
-    {
-        name: 'length',
-        cast: function (value) {
-            return Number(value);
-        }
+  {
+    name: 'length',
+    cast: function (value) {
+      return Number(value)
     }
-];
+  }
+]
 
 /**
  * min length check for string input.
@@ -17,11 +16,11 @@ const PARAMS = [
  * @type {{params: [{cast: function(*=): number, name: string}], validate: (function(*=, *): boolean)}}
  */
 export const string_min = {
-    validate: (value, _a) => {
-        return min.validate(stringCorrection(value), {length: _a.length});
-    },
-    params: PARAMS
-};
+  validate: (value, _a) => {
+    return min(stringCorrection(value), {length: _a.length})
+  },
+  params: PARAMS
+}
 
 /**
  * max length check for string input.
@@ -30,8 +29,16 @@ export const string_min = {
  * @type {{params: [{cast: function(*=): number, name: string}], validate: (function(*=, *): boolean)}}
  */
 export const string_max = {
-    validate: (value, _a) => {
-        return max.validate(stringCorrection(value), {length: _a.length});
-    },
-    params: PARAMS
+  validate: (value, _a) => {
+    return max(stringCorrection(value), {length: _a.length})
+  },
+  params: PARAMS
+}
+
+
+export const stringCorrection = (value) => {
+  if (value == null) {
+    return;
+  }
+  return value.replace(/\r?\n/g, '\r\n');
 };

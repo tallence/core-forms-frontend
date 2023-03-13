@@ -1,3 +1,6 @@
+import emitter from 'tiny-emitter/instance'
+import {useCoreFormsStore} from './store'
+
 /**
  * Constants
  */
@@ -28,28 +31,31 @@ export const EventConstants = {
   WIZARD_NEXT_PAGE: 'core-forms.wizard-next',
   WIZARD_PREV_PAGE: 'core-forms.wizard-prev',
   WIZARD_NAVIGATION: 'core-forms.wizard-navigation',
-  WIZARD_COMPLETED: 'core-forms.wizard-completed',
-};
+  WIZARD_COMPLETED: 'core-forms.wizard-completed'
+}
 
 /**
  * Helper to send events out of the app
  */
 export const EventSender = {
-  _ROOT: undefined,
-  init(root) {
-    this._ROOT = root;
-  },
   send(trigger, data) {
-    if (this._ROOT) {
+    const {formSource} = useCoreFormsStore();
 
-      data = data || {};
-      data.url = this._ROOT.$store.getters['coreForms/getFormSource'];
+    //prepare (global) data to be attached to the event
+    data = data || {}
+    data.url = formSource
 
-      this._ROOT.$emit(EventConstants.GLOBAL_EVENT,
-        {
-          trigger: trigger,
-          data: data
-        });
-    }
+    EventBus.$emit(EventConstants.GLOBAL_EVENT, {
+      trigger: trigger,
+      data: data
+    })
   }
-};
+}
+
+
+export const EventBus = {
+  $on: (...args) => emitter.on(...args),
+  $once: (...args) => emitter.once(...args),
+  $off: (...args) => emitter.off(...args),
+  $emit: (...args) => emitter.emit(...args)
+}

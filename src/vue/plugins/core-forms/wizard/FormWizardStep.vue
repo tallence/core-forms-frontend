@@ -16,14 +16,15 @@
 
 <script>
 
-import {mapGetters} from "vuex"
+import {mapState} from 'pinia'
+import {useCoreFormsStore} from '../common/store'
 
 export default {
   name: 'FormWizardStep',
   replace: true,
   props: ['pageIndex'],
   computed: {
-    ...mapGetters('coreForms', ['activePageIndex', 'activePageData']),
+    ...mapState(useCoreFormsStore, ['activePageIndex', 'activePageData']),
     isPageDisplayed() {
       return this.pageIndex === this.activePageIndex
     }

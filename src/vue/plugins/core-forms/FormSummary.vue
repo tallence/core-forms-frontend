@@ -6,30 +6,33 @@
         <component v-for="field in formPage.formElements"
                    :key="field.id"
                    :is="getSummaryFieldType(field.type)"
-                   :field="field"/>
+                   :form-field="field"/>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import {mapGetters} from "vuex"
-import {CoreFormsUtils} from "./index"
+
+
+import {useCoreFormsStore} from './common/store'
+import {CoreFormsConstants} from './common/util'
+import {mapState} from 'pinia'
+import {capitalize} from 'vue'
 
 export default {
   name: 'FormSummary',
   replace: true,
   props: ['formPage'],
   computed: {
-    ...mapGetters('coreForms', ['previousFormPages'])
+    ...mapState(useCoreFormsStore, ['previousFormPages'])
   },
   methods: {
     getSummaryFieldType(fieldType) {
-      let summaryField = 'SummaryBaseField'
-      if (CoreFormsUtils.isFieldTypeSupported(this.$root, 'Summary' + fieldType, false)) {
-        return 'Summary' + fieldType
-      }
-      return summaryField
+      const summaryFieldName = CoreFormsConstants.SUMMARY_PREFIX + capitalize(fieldType || 'BaseField');
+      let result = this.$isFieldSupported(summaryFieldName, false) ? summaryFieldName :  'SummaryBaseField'
+      console.log('summary field for ' + fieldType, result);
+      return result;
     }
   }
 }

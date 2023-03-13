@@ -1,17 +1,17 @@
 <template>
   <div>
-    <form-element-wrapper :validation-rules="validatorRules"
-                          :field="field">
-        <input class="form-control"
-               type="email"
-               :aria-placeholder="field.placeholder"
-               :placeholder="field.placeholder"
-               :name="field.technicalName"
-               v-model.trim.lazy="field.value"
-               v-debounce="inputDebounceDelay"
-               :id="field.id"
-               :required="field.validator.mandatory"/>
-    </form-element-wrapper>
+    <form-element :validation-rules="validatorRules"
+                  :form-field="field">
+      <input class="form-control"
+             type="email"
+             :aria-placeholder="field.placeholder"
+             :placeholder="field.placeholder"
+             :name="field.technicalName"
+             v-model.trim.lazy="field.value"
+             v-debounce="inputDebounceDelay"
+             :id="field.id"
+             :required="field.validator.mandatory"/>
+    </form-element>
 
     <check-box v-if="field.displayCheckbox"
                css-classes="core-forms__field-copymail form-group"
@@ -20,20 +20,20 @@
                v-model="field.copyValue"
                :required="false"
                :show-asterisk="false"
-               :option-label="'inputCopyMail'|formsMessage"
+               :option-label="$translateMessage('inputCopyMail')"
                :option-value="'on'"/>
   </div>
 </template>
 
 <script>
-    import FormElementValidationMixin from "../mixins/FormElementValidationMixin";
-    import CheckBox from "../components/CheckBox";
+import FormElementValidationMixin from "../mixins/FormElementValidationMixin"
+import CheckBox from "../components/CheckBox"
 
-    export default {
-      components: {CheckBox},
-      mixins: [FormElementValidationMixin],
-        beforeMount() {
-           this.addEmailBasedValidationRules();
-        }
-    }
+export default {
+  components: {CheckBox},
+  mixins: [FormElementValidationMixin],
+  beforeMount() {
+    this.addEmailBasedValidationRules()
+  }
+}
 </script>

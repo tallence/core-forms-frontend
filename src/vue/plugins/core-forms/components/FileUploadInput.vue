@@ -26,7 +26,7 @@
 <script>
   export default {
     props: {
-      value: {type: File, default: null},
+      modelValue: {type: File, default: null},
       fieldName: {required: true, type: String},
       fieldId: {required: true, type: String},
       cssClasses: {required: false, default: null},
@@ -37,10 +37,10 @@
     computed: {
       innerFile: {
         get() {
-          return this.value
+          return this.modelValue
         },
         set(newValue) {
-          this.$emit('input', newValue)
+          this.$emit('update:modelValue', newValue)
         }
       }
     },

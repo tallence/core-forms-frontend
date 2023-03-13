@@ -13,7 +13,8 @@
 </template>
 
 <script>
-    import {mapGetters} from "vuex"
+    import {mapState} from "pinia"
+    import {useCoreFormsStore} from '../common/store'
 
     export default {
         props: {
@@ -21,7 +22,7 @@
             'displayProgress': {required: false, default: false}
         },
         computed: {
-            ...mapGetters('coreForms', ['formSubmitProgress'])
+            ...mapState(useCoreFormsStore, ['formSubmitProgress'])
         }
     }
 </script>

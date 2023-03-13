@@ -1,58 +1,54 @@
-import CoreFormsDefaultMessages from "./messages";
+import CoreFormsDefaultMessages from './messages'
 
-/**
- * Simple plugin for translation texts; provides easy access methods
- *
- * @type {{install(*): void, _MESSAGES: {}, addMessages(*): void}}
- */
 const CoreFormsMessagesPlugin = {
-  _MESSAGES: CoreFormsDefaultMessages,
-  install(Vue) {
-    let self = this;
+  _TRANSLATIONS: CoreFormsDefaultMessages,
 
-    Vue.prototype.$addFormsMessages = function (messages) {
-      self._addMessages(messages)
-    }
-    Vue.prototype.$addFormsMessage = function (key, value) {
-      let newMessage = {};
-      newMessage[key] = value;
-      self._addMessages(newMessage)
-    }
+  install(app, initialTexts) {
 
-    Vue.prototype.$getFormsMessage = function (key) {
-      return self._MESSAGES[key] || key
-    }
+    let self = this
 
-    // Provide easy methods to messages/texts for all components via global mixin
-    Vue.mixin({
-      methods: {
-        getFormsMessage(key) {
-          return self._MESSAGES[key] || key
-        },
-        hasFormsMessage(key) {
-          return (self._MESSAGES[key] != null)
+    const _isTranslationAvailableFn = (key) => {
+      return (self._TRANSLATIONS[key] != null)
+    }
+    const _getTranslationFn = (key, params = null) => {
+      let message = self._TRANSLATIONS[key] || key
+      if (params != null) {
+        if (!Array.isArray(params)) {
+          params = [params]
         }
+        params.forEach((item, index) => {
+          message = message.replace(`[[${index}]]`, item)
+        })
       }
-    });
+      return message
+    }
+    const _addTranslationFn = (key, value) => {
+      let newMessage = {}
+      newMessage[key] = value
+      _addTranslationsFn(newMessage)
+    }
 
-    //adding optional filter for easier usage in templates
-    Vue.filter('formsMessage', function (value) {
-      return self._MESSAGES[value] || value
+    const _addTranslationsFn = (messages) => {
+      this._TRANSLATIONS = {...self._TRANSLATIONS, ...messages}
+    }
+
+    //init with provided texts
+    _addTranslationsFn(initialTexts || {})
+
+    const translationFunctions = {
+      $translateMessage: _getTranslationFn,
+      $isTranslationAvailable: _isTranslationAvailableFn,
+      $addTranslation: _addTranslationFn,
+      $addTranslations: _addTranslationsFn
+    }
+
+    app.config.globalProperties = {...app.config.globalProperties, ...translationFunctions}
+    app.mixin({
+      methods: {...translationFunctions}
     });
-  },
-  /**
-   * use this method to initially pass some data to the plugin
-   *
-   * @param data
-   */
-  config(data = CoreFormsDefaultMessages) {
-    this._addMessages(data)
-  },
-  _addMessages(messages) {
-    this._MESSAGES = {...this._MESSAGES, ...messages}
   }
 }
 
-export default CoreFormsMessagesPlugin;
+export default CoreFormsMessagesPlugin
 
 

@@ -1,67 +1,68 @@
 <template>
-  <transition name="core-forms__app__transition-fade" appear mode="out-in">
+  <!-- ################################################### LOADING STATE INITIAL-->
+  <form-load-spinner v-if="isFormLoading" :inline-mode="true"/>
 
-    <!-- ################################################### LOADING STATE INITIAL-->
-    <form-load-spinner v-if="isFormLoading" :inline-mode="true"/>
+  <!-- ################################################### REGULAR STATE-->
+  <div v-if="!isFormLoading">
 
-    <!-- ################################################### REGULAR STATE-->
-    <div v-if="!isFormLoading">
+    <!-- ################################################### SUBMIT STATE-->
+    <form-load-spinner v-if="isFormSubmitting"
+                       :inline-mode="false"
+                       :display-progress="hasFileUploads">
+      {{ $translateMessage('submitActive') }}
+    </form-load-spinner>
 
-      <!-- ################################################### SUBMIT STATE-->
-      <form-load-spinner v-if="isFormSubmitting"
-                         :inline-mode="false"
-                         :display-progress="hasFileUploads">
-        {{ 'submitActive'|formsMessage }}
-      </form-load-spinner>
-
-      <div class="form-group form-group-text core-forms__intro cm-details__text cm-richtext"
-           v-if="formIntroText"
-           v-html="formIntroText">
-      </div>
-
-      <form-wizard ref="wizard"
-                   @submit="onSubmitForm">
-        <form-wizard-step v-for="(formPage, pageIndex) in formPages"
-                          :key="formPage.id"
-                          :page-index="pageIndex">
-
-          <form-summary v-if="formPage.isSummaryPage" :form-page="formPage"></form-summary>
-          <form-fields v-if="formPage.formElements" :form-page="formPage"></form-fields>
-        </form-wizard-step>
-      </form-wizard>
-
+    <div class="form-group form-group-text core-forms__intro cm-details__text cm-richtext"
+         v-if="formIntroText"
+         v-html="formIntroText">
     </div>
-  </transition>
+
+    <form-wizard ref="wizard"
+                 @submit="onSubmitForm">
+      <form-wizard-step v-for="(formPage, pageIndex) in formPages"
+                        :key="formPage.id"
+                        :page-index="pageIndex">
+
+        <form-summary v-if="formPage.isSummaryPage" :form-page="formPage"></form-summary>
+        <form-fields v-if="formPage.formElements" :form-page="formPage"></form-fields>
+      </form-wizard-step>
+    </form-wizard>
+
+  </div>
 
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex"
-import {CoreFormsEvents, CoreFormsEventSender, CoreFormsUtils} from "./index"
+import {mapState, mapActions} from 'pinia'
+import {CoreFormsEvents, CoreFormsEventSender} from "./index"
+import {useCoreFormsStore} from './common/store'
 
 export default {
-  name: 'FormPage',
+  name: 'Form',
   replace: true,
-
-  // made available during app initialization via provide() { ... }
-  inject: ['formUrl'],
+  emits: ['onFormError', 'onFormSuccess'],
+  inject: {
+    formUrl: {
+      default: null
+    }
+  },
 
   computed: {
-    ...mapGetters('coreForms', ['isFormLoading', 'isFormSubmitting', 'formValues', 'formPages', 'allFormFields']),
+    ...mapState(useCoreFormsStore, ['isFormLoading', 'isFormSubmitting', 'formValues', 'formPages', 'allFormFields', 'formProperty']),
     formIntroText() {
-      return this.$store.getters['coreForms/getFormProperty']("introText")
+      return this.formProperty("introText")
     },
     hasFileUploads() {
       return this.allFormFields && this.allFormFields.filter(e => e.type === 'FileUpload' && e.value != null).length
     }
   },
   methods: {
-    ...mapActions('coreForms', ['loadForm', 'submitForm']),
+    ...mapActions(useCoreFormsStore, ['loadForm', 'submitForm']),
     async onLoadForm() {
       try {
         await this.loadForm(this.formUrl)
-        this.$nextTick(() => {
-
+        await this.$nextTick(() => {
+          //if (this.$refs.observer) this.$refs.observer.reset();
         })
       } catch (err) {
         this.$emit('onFormError', err)
@@ -69,9 +70,9 @@ export default {
     },
     async onSubmitForm() {
       try {
-        let result = await this.submitForm();
+        let result = await this.submitForm()
         if (result) {
-          this.$addFormsMessage({
+          this.$addTranslation({
             successPageTitle: result['textHeader'],
             successPageText: result['textMessage'],
             successPageButton: result['textButton']
@@ -85,7 +86,6 @@ export default {
   },
 
   mounted() {
-    CoreFormsEventSender.init(this.$root)
     CoreFormsEventSender.send(CoreFormsEvents.APPLICATION_LOADED)
     this.onLoadForm()
   }

@@ -3,15 +3,10 @@ include core forms base styles
 */
 
 @import '../../vue/plugins/core-forms/scss/core-forms';
+@import '../../vue/extensions/date-picker-plugin/scss/main';
 
 //this mixin will create a column div with a right margin, bootstrap itself offers only left margin.
 @include create-column-offset-right($grid-breakpoints, $grid-columns);
-
-/*
-include datepicker plugin style
-*/
-
-@import '../../vue/shared/date-picker-plugin/style';
 
 //add custom app styles?
 

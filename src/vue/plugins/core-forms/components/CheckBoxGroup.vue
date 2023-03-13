@@ -5,7 +5,7 @@
                v-model="checkBoxData[option.id]"
                :field-id="name + '_' + index"
                :field-name="name"
-               @input="handleValueChange(option.id, $event)"
+               @update:modelValue="handleValueChange(option.id, $event)"
                :option-value="option.id"
                :option-label="option.name"
                :css-classes="cssClasses"
@@ -27,13 +27,13 @@
   export default {
     replace: true,
     components: {'check-box': CheckBox},
-    props: ['value', 'options', 'name', 'cssClasses', 'required'],
+    props: ['modelValue', 'options', 'name', 'cssClasses', 'required'],
     computed: {
       checkBoxData: {
         get() {
           let obj = {};
           this.options.forEach(o => {
-            obj[o.id] = this.value.indexOf(o.id) !== -1
+            obj[o.id] = this.modelValue.indexOf(o.id) !== -1
           });
           return obj
         }
@@ -41,7 +41,7 @@
     },
     methods: {
       handleValueChange(option, isSelected) {
-        this.$emit('input', isSelected ? arrayUnion(this.value, [option]) : arrayWithout(this.value, option));
+        this.$emit('update:modelValue', isSelected ? arrayUnion(this.modelValue || [], [option]) : arrayWithout(this.modelValue || [], option));
       }
     }
   }
