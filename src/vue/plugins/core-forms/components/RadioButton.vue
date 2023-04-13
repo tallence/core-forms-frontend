@@ -17,14 +17,14 @@
 <script>
   export default {
     replace: true,
-    props: ['fieldName', 'fieldId', 'value', 'optionValue', 'optionLabel', 'required', 'cssClasses', 'showAsterisk'],
+    props: ['fieldName', 'fieldId', 'modelValue', 'optionValue', 'optionLabel', 'required', 'cssClasses', 'showAsterisk'],
     computed: {
       radioButtonValue: {
         get() {
-          return this.value
+          return this.modelValue
         },
         set() {
-          this.$emit("input", this.optionValue)
+          this.$emit('update:modelValue', this.optionValue)
         }
       }
     }

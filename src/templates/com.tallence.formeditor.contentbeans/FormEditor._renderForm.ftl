@@ -7,8 +7,11 @@
 <div id="core-forms-app-${self.contentId}"
      class="core-forms-app"
 
-     <#-- this uses different versions of the app -->
-     data-form="vue-sample-app"
+     <#-- selector the script searches for -->
+
+     data-form="vue-example-app"
+
+     <#-- provide necessary data for app to work -->
 
      data-app-remote-url="${configUrl}"
 
@@ -18,6 +21,8 @@
           data-app-recaptcha-sitekey="${recaptchaSecret}"
        </#if>
      </#if>
+
+     <#-- provide translations to the app -->
 
      data-messages-input-file-remove="${cm.getMessage("com.tallence.forms.label.input.file.remove")}"
      data-messages-input-file-empty="${cm.getMessage("com.tallence.forms.label.input.file.empty")}"

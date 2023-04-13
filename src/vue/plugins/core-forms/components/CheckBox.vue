@@ -3,7 +3,7 @@
     <input type="checkbox"
            class="form-check-input custom-control-input"
            :name="fieldName"
-           :checked="value"
+           :checked="modelValue"
            :value="optionValue"
            @change="handleValueChange"
            :id="fieldId"
@@ -18,10 +18,10 @@
 <script>
   export default {
     replace: true,
-    props: ['fieldName', 'fieldId', 'value', 'optionLabel', 'optionValue', 'required', 'cssClasses', 'showAsterisk'],
+    props: ['fieldName', 'fieldId', 'modelValue', 'optionLabel', 'optionValue', 'required', 'cssClasses', 'showAsterisk'],
     methods: {
       handleValueChange(event) {
-        this.$emit('input', event.target.checked);
+        this.$emit('update:modelValue', event.target.checked);
       }
     }
   }

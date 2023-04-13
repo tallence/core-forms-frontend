@@ -1,5 +1,5 @@
-import CoreFormsValidationPlugin, {CoreFormsValidationRules} from "../../core-forms-validation";
-import FormElementBaseMixin from "./FormElementBaseMixin";
+import CoreFormsValidationPlugin, {CoreFormsValidationRules} from "../../core-forms-validation"
+import FormElementBaseMixin from "./FormElementBaseMixin"
 
 /**
  * this mixin adds all validation related functions to a form field element
@@ -99,7 +99,7 @@ const FormElementValidationMixin = {
                     message = fieldMessages[messageKey];
                 }
             }
-            CoreFormsValidationPlugin.addValidationMessageForField(this.field.technicalName, this.field.name, ruleName, message)
+          CoreFormsValidationPlugin.addValidationMessageForField(this.field.technicalName, this.field.name, ruleName, message)
         },
     }
 };

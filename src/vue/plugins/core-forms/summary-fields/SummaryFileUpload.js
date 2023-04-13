@@ -4,14 +4,14 @@ export default {
   extends: SummaryBaseField,
   computed: {
     displayValue() {
-      return this.hasValue ? this.field.value.name || null : null
+      return this.hasValue ? this.formField.value.name || null : null
     },
     isDisplayed() {
       return this.displayValue != null
     },
     hasValue() {
       //in this case an object gets stored
-      return this.field.value != null && typeof this.field.value === 'object'
+      return this.formField.value != null && typeof this.formField.value === 'object'
     }
   }
 }

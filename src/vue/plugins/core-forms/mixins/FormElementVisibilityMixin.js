@@ -1,27 +1,30 @@
-import {isFieldTypeSupported} from "../common/util"
+import {useCoreFormsStore} from '../common/store'
 
 /**
  * this mixin adds all visibility functions to a form field element
  */
 const FormElementVisibilityMixin = {
   props: {
-    field: {
+    formField: {
       type: Object,
       required: true
     }
   },
   computed: {
     isRendered() {
-      if (!this.field || !isFieldTypeSupported(this.$root, this.field.type, true)) {
+      if (!this.formField || !this.$isFieldSupported(this.formField.type)) {
         return false
       }
-      return this.isFieldVisible(this.field)
+      return this.isFieldVisible(this.formField)
     }
   },
   methods: {
     hasFieldValue(fieldId, expectedValues = []) {
+
+      const { formFieldValue } = useCoreFormsStore()
+
       /* the linked/referenced field is actually visible, check if the values match */
-      let storedValue = this.$store.getters["coreForms/getFormValue"](fieldId)
+      let storedValue = formFieldValue(fieldId)
       let relatedValues = Array.isArray(storedValue) ? storedValue : (storedValue != null ? [storedValue] : [])
 
       return expectedValues != null && expectedValues.some(target => relatedValues.includes(target))
@@ -38,6 +41,8 @@ const FormElementVisibilityMixin = {
     isFieldVisible(fieldDefinition, forcedValueCheck = false) {
       let self = this
 
+      const { fieldById, fieldsByReferenceId } = useCoreFormsStore()
+
       if (fieldDefinition
         && fieldDefinition['advancedSettings']
         && fieldDefinition['advancedSettings']['visibility']
@@ -52,7 +57,7 @@ const FormElementVisibilityMixin = {
          *
          * check visibility and compare values
          */
-        let linkedField = self.$store.getters["coreForms/getFieldById"](elementId)
+        let linkedField = fieldById(elementId)
         if (linkedField != null) {
           return this.isFieldVisible(linkedField, forcedValueCheck) && self.hasFieldValue(elementId, targetValues)
         }
@@ -68,7 +73,7 @@ const FormElementVisibilityMixin = {
          * the check will be done recursively, only one fulfilled condition of a subfield is required
          */
 
-        let referencedFields = self.$store.getters["coreForms/getFieldsByReferencedId"](elementId)
+        let referencedFields = fieldsByReferenceId(elementId)
         return (referencedFields || []).some(referencedField => self.isFieldVisible(referencedField) && self.hasFieldValue(referencedField.id, targetValues))
       }
 

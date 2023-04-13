@@ -1,7 +1,8 @@
 // Own variable imports first
+
 @import "variables/sample-theme";
 @import "variables/bootstap-theme";
 
 // Dependency variables
+
 @import "?smart-import-variables";
-@import '~bootstrap/scss/bootstrap';

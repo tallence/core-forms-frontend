@@ -1,37 +1,25 @@
-const {webpackConfig} = require("@coremedia/theme-utils");
-const deepMerge = require("./deepMerge");
-const { VueLoaderPlugin } = require('vue-loader')
+const webpack = require("webpack")
+const {webpackConfig} = require("@coremedia/theme-utils")
+const deepMerge = require("./deepMerge")
+const {vueWebpackConfig, vueDefineOptions} = require('./src/vue/webpack/webpack.vue.config')
 
 module.exports = (env, argv) => {
-  const config = webpackConfig(env, argv);
+  const config = webpackConfig(env, argv)
 
-  deepMerge(config, {
-    plugins: [
-      new VueLoaderPlugin()
-    ],
-    resolve: {
-      extensions: ['.js', '.vue'],
-      alias: {
-        'vue$': 'vue/dist/vue.min.js'
-      }
-    },
-    module: {
-      rules: [{
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            'scss': [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader'
-            ]
-          }
-        }
-      }]
-    }
-  });
+  const isProductionBuild = (argv.mode || 'production') === 'production'
 
-  return config;
-};
+  deepMerge(config, vueWebpackConfig(config, isProductionBuild))
+
+  config.plugins = config.plugins || []
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(isProductionBuild ? 'production' : 'development')
+      },
+      ...vueDefineOptions(isProductionBuild)
+    })
+  )
+
+  return config
+}
 

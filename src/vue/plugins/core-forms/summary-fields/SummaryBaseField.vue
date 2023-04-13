@@ -11,25 +11,24 @@ import FormElementVisibilityMixin from "../mixins/FormElementVisibilityMixin"
 export default {
   name: 'SummaryBaseField',
   mixins: [FormElementVisibilityMixin],
-  props: ['field'],
   computed: {
     isRequired() {
-      return this.field.validator.mandatory;
+      return this.formField.validator.mandatory;
     },
     isDisplayed() {
       return this.hasValue && this.displayValue != null
     },
     labelValue() {
-      return this.field.name
+      return this.formField.name
     },
     displayValue() {
-      return this.field.value
+      return this.formField.value
     },
     hasLabelValue() {
       return this.labelValue != null && this.labelValue.length;
     },
     hasValue() {
-      return this.field.value != null && this.field.value.length
+      return this.formField.value != null && this.formField.value.length
     }
   }
 }

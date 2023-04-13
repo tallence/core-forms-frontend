@@ -1,10 +1,9 @@
 <template>
-  <vee-observer v-slot="{ errors }"
-                ref="observer"
-                slim>
+  <vee-form v-slot="{ handleSubmit, errors }"
+            ref="veeForm"
+            slim>
 
-    <form @submit.prevent="validate"
-          @validate
+    <form @submit.prevent="handleSubmit(confirmCurrentPage)"
           ref="form"
           novalidate
           autocomplete="on">
@@ -24,7 +23,7 @@
                  aria-current="page"
                  :aria-disabled="(pageIndex >= activePageIndex)"
                  href="#"
-                 @click="goToFormPage(pageIndex)">{{ formPage.title || (pageIndex + 1) }}</a>
+                 @click="navigateToPage(pageIndex)">{{ formPage.title || (pageIndex + 1) }}</a>
             </li>
           </ul>
         </div>
@@ -45,30 +44,33 @@
           <div class="row">
             <div class="col-xs-12 col-md-6">
 
-              <!-- this is a dummy spam protection element, only show on the last page -->
-              <core-forms-spam-protection v-if="!hasNextFormPage"
-                                          @onValidated="finalizeSubmit"
-                                          ref="spamProtection"></core-forms-spam-protection>
+              <core-forms-captcha v-if="!hasNextFormPage"
+                                  @onCaptchaCompleted="submitData"
+                                  ref="captcha"></core-forms-captcha>
 
               <button type="button"
-                      v-if="hasPrevFormPage"
-                      :disabled="!hasPrevFormPage || isFormSubmitting"
-                      @click="goToPreviousFormPage"
+                      v-if="hasPreviousFormPage"
+                      :disabled="!hasPreviousFormPage || isFormSubmitting"
+                      @click="navigateToPreviousPage"
                       class="btn btn-text core-forms__prev">
-                {{ 'prevPageButton'|formsMessage }}
+                {{ $translateMessage('prevPageButton') }}
               </button>
 
               <button type="submit"
-                      :disabled="isFormSubmitting"
-                      class="btn btn-primary core-forms__submit">
-                {{ (hasNextFormPage ? 'nextPageButton' : 'submitButton')|formsMessage }}
+                      :disabled="isFormSubmitting || isCaptchaActive"
+                      class="btn btn-primary core-forms__submit"
+                      :class="{
+                        'btn--disabled': isFormSubmitting || isCaptchaActive,
+                        'btn--captcha-active': isCaptchaActive
+                      }">
+                {{ $translateMessage(hasNextFormPage ? 'nextPageButton' : 'submitButton') }}
               </button>
             </div>
 
             <div class="col-xs-12 col-md-6 text-right">
               <div class="core-forms__required-hint required-asterisk"
                    :class="{'form-has-errors': hasFieldErrorMessages(errors) }">
-                {{ 'inputMandatory'|formsMessage }}
+                {{ $translateMessage('inputMandatory') }}
               </div>
             </div>
 
@@ -77,22 +79,28 @@
         </div>
       </div>
     </form>
-  </vee-observer>
+  </vee-form>
 
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex"
 import {CoreFormsEvents, CoreFormsEventSender} from "../index"
+import {useCoreFormsStore} from '../common/store'
+import {mapActions, mapState} from 'pinia'
 
 export default {
   name: 'FormWizard',
   replace: true,
   computed: {
-    ...mapGetters('coreForms', ['activePageIndex', 'formPages', 'isFormSubmitting', 'hasNextFormPage', 'hasPrevFormPage'])
+    ...mapState(useCoreFormsStore, ['activePageIndex', 'formPages', 'isFormSubmitting', 'hasNextFormPage', 'hasPreviousFormPage']),
+    isCaptchaActive() {
+      return this.$refs.captcha?.isActive() && this.isSubmitTriggered;
+    }
   },
+  emits: ['submit'],
   data() {
     return {
+      isSubmitTriggered: false,
       errorMessage: null
     }
   },
@@ -100,38 +108,45 @@ export default {
 
     /************************************ VALIDATION *******************************/
 
-    async validate() {
-      const isValid = await this.$refs.observer.validate()
+    async confirmCurrentPage() {
+      const isValid = await this.$refs.veeForm?.validate()
       if (!isValid) {
-        CoreFormsEventSender.send(CoreFormsEvents.VALIDATION_FAILED);
-        return;
+        CoreFormsEventSender.send(CoreFormsEvents.VALIDATION_FAILED)
+        return
       }
 
       if (this.hasNextFormPage) {
-        await this.navigateToNextPage();
+        this.isSubmitTriggered = false;
+        await this.navigateToNextPage()
       } else {
-        this.$refs.spamProtection?.execute();
+        this.isSubmitTriggered = true;
+        this.$refs.captcha?.execute()
       }
     },
+
     hasFieldErrorMessages(errors) {
-      return Object.values(errors).filter(f => f.length !== 0).length
+      return errors != null && errors.length
     },
+
     resetValidation() {
-      this.$refs.observer?.reset();
-      this.$refs.spamProtection?.reset();
+      this.isSubmitTriggered = false;
+      this.$refs.veeForm?.reset()
+      this.$refs.captcha?.reset()
     },
 
     /************************************ WIZARD *******************************/
 
-    ...mapActions('coreForms', ['goToPreviousFormPage', 'goToNextFormPage', 'goToFormPage', 'saveInputAsFormData']),
+    ...mapActions(useCoreFormsStore, ['goToPreviousFormPage', 'goToNextFormPage', 'goToFormPage', 'saveInputAsFormData']),
     navigateToPage(pageIndex) {
       //can not navigate to pages in front, only backwards
       if (pageIndex > 0 && pageIndex < this.activePageIndex) {
+        this.$refs.captcha?.reset()
         this.goToFormPage(pageIndex)
       }
     },
     navigateToPreviousPage() {
-      if (this.hasPrevFormPage) {
+      if (this.hasPreviousFormPage) {
+        this.$refs.captcha?.reset()
         this.goToPreviousFormPage()
       }
     },
@@ -139,8 +154,6 @@ export default {
       if (this.hasNextFormPage) {
         await this.saveInputData()
         this.goToNextFormPage()
-      } else {
-        await this.finalizeSubmit()
       }
     },
 
@@ -150,23 +163,25 @@ export default {
       await this.saveInputAsFormData(new FormData(this.$refs.form))
     },
 
-    async finalizeSubmit() {
-      await this.saveInputData();
-      this.$emit('submit');
+    async submitData() {
+      if (!this.isSubmitTriggered) return;
+
+      await this.saveInputData()
+      this.$emit('submit')
       CoreFormsEventSender.send(CoreFormsEvents.WIZARD_COMPLETED)
     },
 
     onSubmitError(error) {
       if (error == null || (error['globalError'] == null && error['fieldErrors'] == null)) {
-        this.errorMessage = this.getFormsMessage('errorGlobal')
+        this.errorMessage = this.$translateMessage('errorGlobal')
       } else {
         this.errorMessage = error['globalError'] || null
-        this.$refs.observer.setErrors(error['fieldErrors'] || {})
+        this.$refs.veeForm?.setErrors(error['fieldErrors'] || {})
       }
-      this.$refs.spamProtection.reset();
-    },
 
-
+      this.isSubmitTriggered = false;
+      this.$refs.captcha.reset()
+    }
   },
   mounted() {
     CoreFormsEventSender.send(CoreFormsEvents.WIZARD_STARTED)

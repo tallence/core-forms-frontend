@@ -1,5 +1,8 @@
 // Dependency styles
 @import "?smart-import-partials";
 
+// Dependency: Base styling
+@import "~bootstrap-scss/bootstrap";
+
 // Own partials
 @import "partials/sample-app";

@@ -10,7 +10,7 @@
   "scripts": [
     {
       "type": "webpack",
-      "src": "src/js/core-forms-sample.js"
+      "src": "src/js/index.js"
     }
   ],
   "l10n": {
