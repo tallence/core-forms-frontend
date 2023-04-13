@@ -59,11 +59,8 @@ export default {
       handler: function (newVal, oldVal) {
         if (newVal != null && newVal !== oldVal) {
           this.$nextTick(() => {
-            console.log('validating ', newVal)
             this.$refs.veeField?.validate().then((ValidationResult) => {
-              console.log('validation result ', ValidationResult)
               if (ValidationResult.valid || newVal === "") {
-                console.log('update store ')
                 this.setFormFieldValue(this.formField.id, newVal)
               }
             })

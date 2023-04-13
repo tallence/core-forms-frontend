@@ -97,6 +97,7 @@ if (typeof window !== 'undefined') {
  */
 export default {
   name: 'VueRecaptcha',
+  emits: ['render', 'expired', 'verify', 'error'],
   inject: {
     recaptchaHost: {
       type: String,

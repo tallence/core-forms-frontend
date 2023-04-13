@@ -31,7 +31,6 @@ export default {
     getSummaryFieldType(fieldType) {
       const summaryFieldName = CoreFormsConstants.SUMMARY_PREFIX + capitalize(fieldType || 'BaseField');
       let result = this.$isFieldSupported(summaryFieldName, false) ? summaryFieldName :  'SummaryBaseField'
-      console.log('summary field for ' + fieldType, result);
       return result;
     }
   }
